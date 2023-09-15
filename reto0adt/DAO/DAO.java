@@ -9,6 +9,13 @@ package reto0adt.DAO;
  *
  * @author 2dam
  */
-public class DAO {
-    
+public interface DAO {
+    void addUnidadDidactica();
+    void addConvocatoria();
+    void addEnunciado();
+    void checkUnidadDidactica();
+    void checkConvocatoria();
+    void showEnunciadoByUnidadDidactica();
+    void showConvocatoria();
+    //void viewEnunciado();
 }

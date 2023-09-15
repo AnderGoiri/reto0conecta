@@ -5,10 +5,41 @@
  */
 package reto0adt.DAOImplementation;
 
+import reto0adt.DAO.DAO;
+
 /**
  *
  * @author 2dam
  */
-public class DAOdb {
+public class DAOdb implements DAO{
+
+    @Override
+    public void addUnidadDidactica() {
+    
+    }
+    @Override
+    public void addEnunciado() {
+    
+    }
+
+    @Override
+    public void checkUnidadDidactica() {
+    
+    }
+
+    @Override
+    public void showEnunciadoByUnidadDidactica() {
+    
+    }
+    
+    
+    @Override
+    public void addConvocatoria() { }
+    @Override
+    public void checkConvocatoria() {}
+    @Override
+    public void showConvocatoria() {}
+    
+   
     
 }
