@@ -9,6 +9,6 @@ package reto0adt.main;
  *
  * @author 2dam
  */
-public class Main {
+class PDDocument {
     
 }
