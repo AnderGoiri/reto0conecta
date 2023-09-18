@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package reto0adt.model;
+
+import java.util.Set;
 
 /**
  *
- * @author 2dam
+ * @author Jagoba Bartolomé Barroso
  */
 public class Enunciado {
     private int id;
@@ -15,7 +17,8 @@ public class Enunciado {
     private Dificultad nivel;
     private boolean disponible;
     private String ruta;
-
+    private Set<UnidadDidactica> setUnidades;
+    
     public int getId() {
         return id;
     }
@@ -36,6 +39,10 @@ public class Enunciado {
         return ruta;
     }
 
+    public Set<UnidadDidactica> getSetUnidades() {
+        return setUnidades;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -54,6 +61,10 @@ public class Enunciado {
 
     public void setRuta(String ruta) {
         this.ruta = ruta;
+    }
+
+    public void setSetUnidades(Set<UnidadDidactica> setUnidades) {
+        this.setUnidades = setUnidades;
     }
 
     public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta) {

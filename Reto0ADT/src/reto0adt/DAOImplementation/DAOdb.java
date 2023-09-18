@@ -6,7 +6,7 @@
 package reto0adt.DAOImplementation;
 
 import reto0adt.DAO.DAO;
-
+import java.io.File;
 /**
  *
  * @author 2dam
@@ -34,7 +34,7 @@ public class DAOdb implements DAO{
     
     
     @Override
-    public void addConvocatoria() { }
+    public void addConvocatoria(File convocatorias) { }
     @Override
     public void checkConvocatoria() {}
     @Override

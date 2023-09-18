@@ -3,20 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package reto0adt.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  *
- * @author 2dam
+ * @author Jagoba Bartolomé Barroso
  */
 public class Convocatoria {
     private String convocatoria;
     private String descripcion;
     private LocalDate fecha;
     private String curso;
-
+    private Set<Enunciado> setEnunciados;
+    
     public String getConvocatoria() {
         return convocatoria;
     }
@@ -33,6 +35,10 @@ public class Convocatoria {
         return curso;
     }
 
+    public Set<Enunciado> getSetEnunciados() {
+        return setEnunciados;
+    }
+
     public void setConvocatoria(String convocatoria) {
         this.convocatoria = convocatoria;
     }
@@ -47,6 +53,14 @@ public class Convocatoria {
 
     public void setCurso(String curso) {
         this.curso = curso;
+    }
+
+    public void setSetEnunciados(Set<Enunciado> setEnunciados) {
+        this.setEnunciados = setEnunciados;
+    }
+
+    public Convocatoria() {
+      
     }
 
     public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso) {
