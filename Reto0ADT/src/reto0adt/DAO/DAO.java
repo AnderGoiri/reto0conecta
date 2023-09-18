@@ -5,6 +5,9 @@
  */
 package reto0adt.DAO;
 
+import model.Enunciado;
+import reto0adt.exceptions.ServerException;
+
 /**
  *
  * @author 2dam
@@ -12,7 +15,7 @@ package reto0adt.DAO;
 public interface DAO {
     void addUnidadDidactica();
     void addConvocatoria();
-    void addEnunciado();
+    void addEnunciado(Enunciado enunciado) throws ServerException;
     void checkUnidadDidactica();
     void checkConvocatoria();
     void showEnunciadoByUnidadDidactica();

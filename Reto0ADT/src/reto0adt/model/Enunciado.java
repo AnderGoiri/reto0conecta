@@ -16,6 +16,7 @@ public class Enunciado {
     private boolean disponible;
     private String ruta;
 
+
     public int getId() {
         return id;
     }
@@ -56,6 +57,9 @@ public class Enunciado {
         this.ruta = ruta;
     }
 
+    public Enunciado() {
+    }
+    
     public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta) {
         this.id = id;
         this.descripcion = descripcion;

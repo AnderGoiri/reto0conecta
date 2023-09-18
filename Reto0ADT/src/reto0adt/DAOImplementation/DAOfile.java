@@ -5,7 +5,9 @@
  */
 package reto0adt.DAOImplementation;
 
+import model.Enunciado;
 import reto0adt.DAO.DAO;
+import reto0adt.exceptions.ServerException;
 
 /**
  *
@@ -31,7 +33,7 @@ public class DAOfile implements DAO{
     @Override
     public void addUnidadDidactica() {}
     @Override
-    public void addEnunciado() {}
+     public void addEnunciado(Enunciado enunciado) throws ServerException {}
 
     @Override
     public void checkUnidadDidactica() {}
