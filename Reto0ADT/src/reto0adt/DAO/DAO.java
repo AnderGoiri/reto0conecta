@@ -5,17 +5,25 @@
  */
 package reto0adt.DAO;
 
+import reto0adt.model.UnidadDidactica;
+
 /**
  *
  * @author 2dam
  */
 public interface DAO {
-    void addUnidadDidactica();
-    void addConvocatoria();
-    void addEnunciado();
-    void checkUnidadDidactica();
-    void checkConvocatoria();
-    void showEnunciadoByUnidadDidactica();
-    void showConvocatoria();
+
+    /**
+     *
+     * @return
+     * @throws java.lang.Exception
+     */
+    public UnidadDidactica addUnidadDidactica()throws Exception;
+    public void addConvocatoria();
+    public void addEnunciado();
+    public void checkUnidadDidactica();
+    public void checkConvocatoria();
+    public void showEnunciadoByUnidadDidactica();
+    public void showConvocatoria();
     //void viewEnunciado();
 }

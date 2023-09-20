@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package reto0adt.model;
 
 /**
  *
- * @author 2dam
+ * @author Ander Goirigolzarri Iturburu 
  */
-public class Unidad {
+public class UnidadDidactica {
+    // --- Attributes ---
     private int id;
     private String acronimo;
     private String titulo;
     private String evaluacion;
     private String descripcion;
 
+    // --- Getters & Setters ---
     public int getId() {
         return id;
     }
@@ -56,12 +58,13 @@ public class Unidad {
         this.descripcion = descripcion;
     }
 
-    public Unidad(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
+    
+    // --- Constructor ---
+    public UnidadDidactica(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
         this.id = id;
         this.acronimo = acronimo;
         this.titulo = titulo;
         this.evaluacion = evaluacion;
         this.descripcion = descripcion;
     }
- 
 }

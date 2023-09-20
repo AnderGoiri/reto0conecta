@@ -6,6 +6,7 @@
 package reto0adt.DAOImplementation;
 
 import reto0adt.DAO.DAO;
+import reto0adt.model.UnidadDidactica;
 
 /**
  *
@@ -28,8 +29,8 @@ public class DAOfile implements DAO{
         
     }
     
-    @Override
     public void addUnidadDidactica() {}
+    
     @Override
     public void addEnunciado() {}
 
@@ -38,5 +39,10 @@ public class DAOfile implements DAO{
 
     @Override
     public void showEnunciadoByUnidadDidactica() {}
+
+    @Override
+    public UnidadDidactica addUnidadDidactica(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
