@@ -6,6 +6,7 @@
 package reto0adt.DAO;
 
 import java.io.File;
+import java.util.Set;
 import reto0adt.model.Convocatoria;
 import reto0adt.model.Enunciado;
 /**
@@ -17,7 +18,7 @@ public interface DAO {
     void addConvocatoria(File convocatorias, Convocatoria c);
     void addEnunciado();
     void checkUnidadDidactica();
-    Convocatoria checkConvocatoria(Enunciado e);
+    Set<Convocatoria> checkConvocatoria(File convocatorias, Enunciado e);
     void showEnunciadoByUnidadDidactica();
     void showConvocatoria();
     //void viewEnunciado();

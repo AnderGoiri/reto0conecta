@@ -18,6 +18,7 @@ public class Enunciado {
     private boolean disponible;
     private String ruta;
     private Set<UnidadDidactica> setUnidades;
+    private Set<Convocatoria> setConvocatorias;
     
     public int getId() {
         return id;
@@ -41,6 +42,10 @@ public class Enunciado {
 
     public Set<UnidadDidactica> getSetUnidades() {
         return setUnidades;
+    }
+
+    public Set<Convocatoria> getSetConvocatorias() {
+        return setConvocatorias;
     }
     
     public void setId(int id) {
@@ -67,12 +72,18 @@ public class Enunciado {
         this.setUnidades = setUnidades;
     }
 
-    public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta) {
+    public void setSetConvocatorias(Set<Convocatoria> setConvocatorias) {
+        this.setConvocatorias = setConvocatorias;
+    }
+
+    public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta, Set<UnidadDidactica> setUnidades, Set<Convocatoria> setConvocatorias) {
         this.id = id;
         this.descripcion = descripcion;
         this.nivel = nivel;
         this.disponible = disponible;
         this.ruta = ruta;
-    }
+        this.setUnidades = setUnidades;
+        this.setConvocatorias = setConvocatorias;
+    } 
     
 }

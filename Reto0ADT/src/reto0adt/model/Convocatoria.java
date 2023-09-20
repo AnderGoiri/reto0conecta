@@ -17,7 +17,7 @@ public class Convocatoria {
     private String descripcion;
     private LocalDate fecha;
     private String curso;
-    private Set<Enunciado> setEnunciados;
+    private int idEnunciado;
     
     public String getConvocatoria() {
         return convocatoria;
@@ -35,8 +35,8 @@ public class Convocatoria {
         return curso;
     }
 
-    public Set<Enunciado> getSetEnunciados() {
-        return setEnunciados;
+    public int getIdEnunciado() {
+        return idEnunciado;
     }
 
     public void setConvocatoria(String convocatoria) {
@@ -55,19 +55,19 @@ public class Convocatoria {
         this.curso = curso;
     }
 
-    public void setSetEnunciados(Set<Enunciado> setEnunciados) {
-        this.setEnunciados = setEnunciados;
+    public void setIdEnunciado(int idEnunciado) {
+        this.idEnunciado = idEnunciado;
     }
-
+ 
     public Convocatoria() {
       
     }
 
-    public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso) {
+    public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso, int idEnunciado) {
         this.convocatoria = convocatoria;
         this.descripcion = descripcion;
         this.fecha = fecha;
         this.curso = curso;
+        this.idEnunciado = idEnunciado;
     }
-    
 }
