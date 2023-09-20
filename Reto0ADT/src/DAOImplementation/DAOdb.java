@@ -17,6 +17,7 @@ import model.Dificultad;
 import model.Enunciado;
 import DAO.DAO;
 import exceptions.ServerException;
+import model.Unidad;
 
 /**
  *
@@ -29,7 +30,7 @@ public class DAOdb implements DAO{
     protected DBConnection conController = new DBConnection();
         
     @Override
-    public UnidadDidactica addUnidadDidactica() throws Exception {
+    public Unidad addUnidadDidactica() throws Exception {
         try {
             Scanner scanner = new Scanner(System.in);
 
@@ -48,7 +49,7 @@ public class DAOdb implements DAO{
             System.out.println("Introduce la descripción de la Unidad Didáctica:");
             String descripcion = scanner.nextLine();
 
-            UnidadDidactica UD = new UnidadDidactica(id, acronimo, titulo, evaluacion, descripcion);
+            Unidad UD = new Unidad(id, acronimo, titulo, evaluacion, descripcion);
 
             System.out.println("Código: " + UD.getId());
             System.out.println("Acrónimo: " + UD.getAcronimo());

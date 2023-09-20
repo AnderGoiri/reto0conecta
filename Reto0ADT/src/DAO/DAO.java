@@ -11,6 +11,7 @@ import model.UnidadDidactica;
 import java.util.Set;
 
 import exceptions.ServerException;
+import model.Unidad;
 
 /**
  *
@@ -22,6 +23,7 @@ public interface DAO {
      * @return
      * @throws java.lang.Exception
      */
+
     public UnidadDidactica addUnidadDidactica()throws Exception;
     void addConvocatoria(Convocatoria c);
     void addEnunciado(Enunciado enunciado) throws ServerException;
