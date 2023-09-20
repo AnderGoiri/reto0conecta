@@ -7,9 +7,9 @@ package model;
 
 /**
  *
- * @author 2dam
+ * @author Ander Goirigolzarri Iturburu 
  */
-public class Unidad {
+public class UnidadDidactica {
     private int id;
     private String acronimo;
     private String titulo;
@@ -56,7 +56,7 @@ public class Unidad {
         this.descripcion = descripcion;
     }
 
-    public Unidad(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
+    public UnidadDidactica(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
         this.id = id;
         this.acronimo = acronimo;
         this.titulo = titulo;

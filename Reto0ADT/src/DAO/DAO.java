@@ -13,7 +13,12 @@ import exceptions.ServerException;
  * @author 2dam
  */
 public interface DAO {
-    void addUnidadDidactica();
+     /**
+     *
+     * @return
+     * @throws java.lang.Exception
+     */
+    public UnidadDidactica addUnidadDidactica()throws Exception;
     void addConvocatoria();
     void addEnunciado(Enunciado enunciado) throws ServerException;
     void checkUnidadDidactica();

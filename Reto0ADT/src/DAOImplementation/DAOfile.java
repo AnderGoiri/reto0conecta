@@ -31,7 +31,9 @@ public class DAOfile implements DAO{
     }
     
     @Override
-    public void addUnidadDidactica() {}
+    public UnidadDidactica addUnidadDidactica(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     @Override
      public void addEnunciado(Enunciado enunciado) throws ServerException {}
 
