@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import reto0adt.model.Convocatoria;
 import reto0adt.model.Enunciado;
 import reto0adt.util.MyObjectOutputStream;
@@ -23,13 +25,19 @@ import reto0adt.util.Util;
  * @author Jagoba Bartolomé Barroso
  */
 public class DAOfile implements DAO{
+    private File convocatorias = new File("convocatorias.obj");
     
     @Override
     public void addUnidadDidactica() {
     }
-
-    @Override
-    public void addConvocatoria(File convocatorias, Convocatoria c) {
+    
+    /**
+     * 
+     * @param convocatorias
+     * @param c 
+     * This method takes the newly created Convocatoria c and adds it to a file named convocatorias
+     */
+    public void addConvocatoria(Convocatoria c) {
         FileOutputStream fos = null;
         ObjectOutputStream moos = null;
 
@@ -85,16 +93,14 @@ public class DAOfile implements DAO{
      *
      * @param convocatorias
      * @param e
-     * @return
+     * @return setConvo
      */
-    @Override
-    public Set<Convocatoria> checkConvocatoria(File convocatorias, Enunciado e) {
+    public Set<Convocatoria> checkConvocatoria(int idEnun) {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
+        
         Convocatoria c = null;
-        Set<Enunciado> setEnun = new HashSet<Enunciado>();
-        Enunciado enun = null;
         Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
         
         if (convocatorias.exists()){
@@ -102,19 +108,17 @@ public class DAOfile implements DAO{
                 ois = new ObjectInputStream(new FileInputStream(convocatorias));
                 for (int i = 0; i < numConvocatorias; i++){
                     c = (Convocatoria) ois.readObject();
-                    setEnun = c.getSetEnunciados();
-                    for (Enunciado en : setEnun){
-                        if (en.equals(enun)){
-                            
-                        }
+                    if (idEnun == c.getIdEnunciado()){
+                        setConvo.add(c);
                     }
                 }
+            } catch (IOException ex) {
                 
-            } catch(Exception x) {
-                
+            } catch (ClassNotFoundException ex) {
+               
             }
         }
-        return c;
+        return setConvo;
     }
 
     @Override

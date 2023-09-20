@@ -15,10 +15,10 @@ import reto0adt.model.Enunciado;
  */
 public interface DAO {
     void addUnidadDidactica();
-    void addConvocatoria(File convocatorias, Convocatoria c);
+    void addConvocatoria(Convocatoria c);
     void addEnunciado();
     void checkUnidadDidactica();
-    Set<Convocatoria> checkConvocatoria(File convocatorias, Enunciado e);
+    Set<Convocatoria> checkConvocatoria(int idEnun);
     void showEnunciadoByUnidadDidactica();
     void showConvocatoria();
     //void viewEnunciado();
