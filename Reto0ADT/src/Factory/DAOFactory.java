@@ -2,9 +2,9 @@ package Factory;
 
 
 import Factory.DAOFactory;
-import reto0adt.DAO.DAO;
-import reto0adt.DAOImplementation.DAOdb;
-import reto0adt.DAOImplementation.DAOfile;
+import DAO.DAO;
+import DAOImplementation.DAOdb;
+import DAOImplementation.DAOfile;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

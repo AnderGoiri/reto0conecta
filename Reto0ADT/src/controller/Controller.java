@@ -5,9 +5,9 @@
  */
 package controller;
 
-import reto0adt.DAO.DAO;
-import reto0adt.view.Menu;
-import reto0adt.view.Operaciones;
+import DAO.DAO;
+import view.Menu;
+import view.Operaciones;
 import util.Util;
 
 /**
@@ -16,7 +16,9 @@ import util.Util;
  */
 public class Controller {
     
-    Menu menu;
+    private Menu menu;
+    
+    public Controller(){}
     
     public void run(){
         
@@ -44,7 +46,7 @@ public class Controller {
 				
 				break;
 			case 3:
-				
+				operaciones.CreateEnunciado();
 				break;
 			case 4:
 				
@@ -61,8 +63,6 @@ public class Controller {
 			}
         
         }while(opc != 7);
-        
-        
-        
+  
     }
 }
