@@ -17,6 +17,8 @@ import model.Dificultad;
 import model.Enunciado;
 import DAO.DAO;
 import exceptions.ServerException;
+import java.util.Set;
+import model.Convocatoria;
 import model.UnidadDidactica;
 
 /**
@@ -105,16 +107,20 @@ public class DAOdb implements DAO{
     @Override
     public void showEnunciadoByUnidadDidactica() {
     
+    }   
+
+    @Override
+    public void addConvocatoria(Convocatoria c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
     @Override
-    public void addConvocatoria() { }
+    public boolean checkConvocatoria(int idEnun) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
-    public boolean checkConvocatoria(int idEnun) {}
-    @Override
-    public Set<Convocatoria> showConvocatoria(int idEnun) {}
-    
-   
-    
+    public Set<Convocatoria> showConvocatoria(int idEnun) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

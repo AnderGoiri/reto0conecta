@@ -92,18 +92,15 @@ public class DAOfile implements DAO{
     /**
      *
      * @param idEnun
-     * @param convocatorias
-     * @param e
      */
     
+    @Override
     public boolean checkConvocatoria(int idEnun) throws IOException, ClassNotFoundException{
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
         boolean encontrado = false;
-        
         Convocatoria c = null;
-        Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
         
         if (convocatorias.exists()){
             try {
