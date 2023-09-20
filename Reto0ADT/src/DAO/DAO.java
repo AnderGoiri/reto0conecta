@@ -7,6 +7,7 @@ package DAO;
 
 import model.Enunciado;
 import exceptions.ServerException;
+import model.Unidad;
 
 /**
  *
@@ -18,7 +19,7 @@ public interface DAO {
      * @return
      * @throws java.lang.Exception
      */
-    public UnidadDidactica addUnidadDidactica()throws Exception;
+    public Unidad addUnidadDidactica()throws Exception;
     void addConvocatoria();
     void addEnunciado(Enunciado enunciado) throws ServerException;
     void checkUnidadDidactica();
