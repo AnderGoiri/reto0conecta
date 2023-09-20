@@ -16,6 +16,7 @@ public class Convocatoria {
     private String descripcion;
     private LocalDate fecha;
     private String curso;
+    private int idEnunciado;
 
     public String getConvocatoria() {
         return convocatoria;
@@ -49,11 +50,18 @@ public class Convocatoria {
         this.curso = curso;
     }
 
-    public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso) {
+    public int getIdEnunciado() {
+        return idEnunciado;
+    }
+    public void setIdEnunciado(int idEnunciado) {
+        this.idEnunciado = idEnunciado;
+    }
+    public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso, int idEnunciado) {
         this.convocatoria = convocatoria;
         this.descripcion = descripcion;
         this.fecha = fecha;
         this.curso = curso;
+        this.idEnunciado = idEnunciado;
     }
     
 }

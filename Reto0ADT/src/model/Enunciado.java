@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Set;
+
 /**
  *
  * @author 2dam
@@ -15,7 +17,7 @@ public class Enunciado {
     private Dificultad nivel;
     private boolean disponible;
     private String ruta;
-
+    private Set<UnidadDidactica> setUnidades;
 
     public int getId() {
         return id;
@@ -59,13 +61,20 @@ public class Enunciado {
 
     public Enunciado() {
     }
-    
-    public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta) {
+    public Set<UnidadDidactica> getSetUnidades() {
+        return setUnidades;
+    }
+
+    public Set<Convocatoria> getSetConvocatorias() {
+        return setConvocatorias;
+    }
+    public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta, Set<UnidadDidactica> setUnidades) {
         this.id = id;
         this.descripcion = descripcion;
         this.nivel = nivel;
         this.disponible = disponible;
         this.ruta = ruta;
-    }
+        this.setUnidades = setUnidades;
+    } 
     
 }
