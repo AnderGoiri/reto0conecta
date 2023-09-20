@@ -91,11 +91,44 @@ public class DAOfile implements DAO{
 
     /**
      *
+     * @param idEnun
      * @param convocatorias
      * @param e
-     * @return setConvo
      */
-    public Set<Convocatoria> checkConvocatoria(int idEnun) {
+    
+    public boolean checkConvocatoria(int idEnun) throws IOException, ClassNotFoundException{
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        int numConvocatorias = Util.calculoFichero(convocatorias);
+        boolean encontrado = false;
+        
+        Convocatoria c = null;
+        Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
+        
+        if (convocatorias.exists()){
+            try {
+                ois = new ObjectInputStream(new FileInputStream(convocatorias));
+                for (int i = 0; i < numConvocatorias; i++){
+                    c = (Convocatoria) ois.readObject();
+                    if (idEnun == c.getIdEnunciado()){
+                        encontrado = true;
+                        i = numConvocatorias;
+                    }
+                }
+            } catch (IOException ex) {
+                
+            } catch (ClassNotFoundException ex) {
+               
+            }
+        }
+        return encontrado;
+    }
+    /**
+     * 
+     * @param idEnun
+     * @return Set de Convocatoria
+     */
+    public Set<Convocatoria> showConvocatoria(int idEnun) {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
@@ -119,11 +152,6 @@ public class DAOfile implements DAO{
             }
         }
         return setConvo;
-    }
-
-    @Override
-    public void showConvocatoria() {
-
     }
    
     @Override

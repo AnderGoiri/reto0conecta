@@ -11,7 +11,8 @@ import model.UnidadDidactica;
 import java.util.Set;
 
 import exceptions.ServerException;
-import model.Unidad;
+import model.Convocatoria;
+import model.UnidadDidactica;
 
 /**
  *
@@ -28,8 +29,8 @@ public interface DAO {
     void addConvocatoria(Convocatoria c);
     void addEnunciado(Enunciado enunciado) throws ServerException;
     void checkUnidadDidactica();
-    Set<Convocatoria> checkConvocatoria(int idEnun);
+    public boolean checkConvocatoria(int idEnun);
     void showEnunciadoByUnidadDidactica();
-    void showConvocatoria();
+    Set<Convocatoria> showConvocatoria(int idEnun);
     //void viewEnunciado();
 }
