@@ -40,7 +40,7 @@ public class Controller {
         opc = Util.leerInt(1, 9);
         switch (opc) {
 			case 1:
-                            
+                                operaciones.createUnidadDidactica();
 				break;
 			case 2:
 				

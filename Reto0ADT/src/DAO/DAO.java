@@ -11,25 +11,31 @@ import model.UnidadDidactica;
 import java.util.Set;
 
 import exceptions.ServerException;
-import model.Unidad;
+import java.sql.SQLException;
 
 /**
  *
  * @author 2dam
  */
 public interface DAO {
-     /**
+
+    /**
      *
-     * @return
-     * @throws java.lang.Exception
+     * @return @throws java.lang.ServerException
      */
 
-    public UnidadDidactica addUnidadDidactica()throws Exception;
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException,SQLException;
+
     void addConvocatoria(Convocatoria c);
+
     void addEnunciado(Enunciado enunciado) throws ServerException;
+
     void checkUnidadDidactica();
+
     Set<Convocatoria> checkConvocatoria(int idEnun);
+
     void showEnunciadoByUnidadDidactica();
+
     void showConvocatoria();
     //void viewEnunciado();
 }
