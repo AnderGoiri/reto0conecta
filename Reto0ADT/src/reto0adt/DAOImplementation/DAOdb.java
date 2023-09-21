@@ -45,8 +45,10 @@ public class DAOdb implements DAO {
             //AGI 20/09: Estaría bien implementar una confirmación antes de crear cada objeto. Podríamos usar los métodos de la clase Util que empleabamos el año pasado
             //System.out.println("¿Desea confirmar la creación de esta Unidad Didáctica?");
             
+
             return UD;
             
+
         } catch (Exception e) {
             System.out.println("Se ha producido un error: " + e.getMessage());
             return null;
@@ -54,30 +56,21 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    public void addEnunciado() {
-
     }
 
     @Override
-    public void checkUnidadDidactica() {
-
     }
 
     @Override
-    public void showEnunciadoByUnidadDidactica() {
-
     }
 
     @Override
-    public void addConvocatoria() {
     }
 
     @Override
-    public void checkConvocatoria() {
     }
 
     @Override
     public void showConvocatoria() {
     }
-
 }
