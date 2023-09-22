@@ -12,6 +12,8 @@ import java.util.Set;
 
 import exceptions.ServerException;
 import java.sql.SQLException;
+import java.util.HashSet;
+import model.Convocatoria;
 
 /**
  *
@@ -37,5 +39,6 @@ public interface DAO {
     void showEnunciadoByUnidadDidactica();
 
     void showConvocatoria();
-    //void viewEnunciado();
+    
+    public HashSet<Enunciado> getEnunciados() throws ServerException;
 }

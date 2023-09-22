@@ -11,6 +11,10 @@ import java.util.logging.Logger;
 import model.Dificultad;
 import model.Enunciado;
 import exceptions.ServerException;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
 import model.UnidadDidactica;
 import util.Util;
@@ -59,7 +63,7 @@ public class Operaciones {
 
     }
 
-    public UnidadDidactica createUnidadDidactica() {
+    public void createUnidadDidactica() {
         try {
             Scanner scanner = new Scanner(System.in);
 
@@ -88,10 +92,49 @@ public class Operaciones {
             //AGI 20/09: Estaría bien implementar una confirmación antes de crear cada objeto. Podríamos usar los métodos de la clase Util que empleabamos el año pasado
             //System.out.println("¿Desea confirmar la creación de esta Unidad Didáctica?");
 
-            return UD;
+            DAOFactory.getModel(0).addUnidadDidactica(UD);
         } catch (Exception e) {
             System.out.println("Se ha producido un error: " + e.getMessage());
-            return null;
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void visualizeEnunciado(){
+        
+        HashSet<Enunciado> enunSet = null;
+        try {
+            enunSet = DAOFactory.getModel(0).getEnunciados();
+        } catch (ServerException ex) {
+            Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(Enunciado enun : enunSet){
+            System.out.println("ID: "+enun.getId());
+            System.out.println("DESCRIPCION: "+enun.getDescripcion());
+            System.out.println("NIVEL: "+enun.getNivel().toString());
+            System.out.println("DISPONIBLE: "+enun.isDisponible());
+            System.out.println("RUTA: "+enun.getRuta()); 
+            System.out.println("----------------------------------------------------------------");
+        }
+        System.out.println("Escribe la ID del Enunciado a Visualizar");
+        int numEnunciado = Util.leerInt();
+        
+        String ruta = new String();
+        for(Enunciado enun : enunSet){
+            if(enun.getId() == numEnunciado)
+            {
+                ruta = enun.getRuta();
+                break;
+            }
+        }
+        
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile;
+                myFile = new File(ruta);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
         }
     }
 }

@@ -12,9 +12,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Convocatoria;
+import model.Dificultad;
 import model.Enunciado;
 import model.UnidadDidactica;
 
@@ -45,34 +49,21 @@ public class DAOdb implements DAO {
         try {
             con = conController.openConnection();
 
-            cst = con.prepareCall("INSERT INTO 'unidad' ('id','acronimo','titulo','evaluacion','descripcion')");
+            cst = con.prepareCall("INSERT INTO `unidad` (`id`,`acronimo`, `titulo`, `evaluacion`, `descripcion`) VALUES (?,?,?,?,?)");
+            
             cst.setInt(1, ud.getId());
             cst.setString(2, ud.getAcronimo());
             cst.setString(3, ud.getTitulo());
             cst.setString(4, ud.getEvaluacion());
             cst.setString(5, ud.getDescripcion());
 
-            cst.executeUpdate();
+            cst.execute();
 
         } catch (SQLException e) {
-            // Log the exception for debugging purposes
-            Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
-            
-            // Rethrow the SQLException as a ServerException
-            throw new ServerException(e.getMessage());
-        } finally {
-            try {
-                if (cst != null) {
-                    cst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                // Handle or log any potential exceptions while closing resources
-                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
-            }
+          throw new ServerException(e.getMessage());
         }
+        
+        conController.closeConnection(stmt, con);
     }
 
     @Override
@@ -85,6 +76,7 @@ public class DAOdb implements DAO {
             Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
         try {
             CallableStatement cst = con.prepareCall("INSERT INTO `enunciado` (`id`,`descripcion`, `nivel`, `disponible`, `ruta`) VALUES (?,?,?,?,?)");
 
@@ -115,14 +107,6 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    public void addConvocatoria() {
-    }
-
-    @Override
-    public void checkConvocatoria() {
-    }
-
-    @Override
     public void showConvocatoria() {
     }
 
@@ -135,5 +119,38 @@ public class DAOdb implements DAO {
     public Set<Convocatoria> checkConvocatoria(int idEnun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public HashSet<Enunciado> getEnunciados() throws ServerException {
+	ResultSet rs = null;
+	HashSet<Enunciado> enunciadoSet = null;
+            try {
+			
+                con = conController.openConnection();
+		String OBTAINids = "SELECT * FROM enunciado";
+
+		enunciadoSet = new HashSet();
+		
+		
+		stmt = con.prepareStatement(OBTAINids);
+		rs = stmt.executeQuery();
+
+		while (rs.next()) {		
+                    Enunciado enun = new Enunciado();
+                    enun.setId(rs.getInt("id"));
+                    enun.setDescripcion(rs.getString("descripcion"));
+                    enun.setNivel(Dificultad.valueOf(rs.getString("nivel")));
+                    enun.setRuta(rs.getString("ruta"));
+                    enunciadoSet.add(enun);
+		}		
+
+		conController.closeConnection(stmt, con);
+
+		} catch (SQLException e) {
+                    throw new ServerException(e.getMessage());
+		}
+		
+		return enunciadoSet;	
+	}
 
 }

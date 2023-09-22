@@ -55,7 +55,7 @@ public class Controller {
 	
 				break;
                         case 6:
- 
+                                operaciones.visualizeEnunciado();
 				break;       
                         case 7:
                         default:

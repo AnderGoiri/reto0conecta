@@ -7,17 +7,20 @@ package DAOImplementation;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import reto0adt.DAO.DAO;
+import DAO.DAO;
+import exceptions.ServerException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Convocatoria;
 import model.Enunciado;
+import model.UnidadDidactica;
 import util.MyObjectOutputStream;
 import util.Util;
 /**
@@ -27,9 +30,7 @@ import util.Util;
 public class DAOfile implements DAO{
     private File convocatorias = new File("convocatorias.obj");
     
-    @Override
-    public void addUnidadDidactica() {
-    }
+   
     
     /**
      * 
@@ -82,9 +83,6 @@ public class DAOfile implements DAO{
         }
     }
     
-    @Override
-    public void addEnunciado() {
-    }
     
     @Override
     public void checkUnidadDidactica() {}
@@ -128,5 +126,20 @@ public class DAOfile implements DAO{
    
     @Override
     public void showEnunciadoByUnidadDidactica() {}
+
+    @Override
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addEnunciado(Enunciado enunciado) throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public HashSet<Enunciado> getEnunciados() throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
