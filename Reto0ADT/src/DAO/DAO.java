@@ -11,6 +11,7 @@ import model.UnidadDidactica;
 import java.util.Set;
 
 import exceptions.ServerException;
+import java.io.IOException;
 import model.Convocatoria;
 import model.UnidadDidactica;
 
@@ -26,11 +27,12 @@ public interface DAO {
      */
 
     public UnidadDidactica addUnidadDidactica()throws Exception;
-    void addConvocatoria(Convocatoria c);
-    void addEnunciado(Enunciado enunciado) throws ServerException;
-    void checkUnidadDidactica();
-    public boolean checkConvocatoria(int idEnun);
-    void showEnunciadoByUnidadDidactica();
-    Set<Convocatoria> showConvocatoria(int idEnun);
+    public void addConvocatoria(Convocatoria c);
+    public void addEnunciado(Enunciado enunciado) throws ServerException;
+    public void checkUnidadDidactica();
+    public boolean checkConvocatoria(int idEnun)throws IOException, ClassNotFoundException;
+    public void showEnunciadoByUnidadDidactica();
+    public Set<Convocatoria> showConvocatoria(int idEnun);
+    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException;
     //void viewEnunciado();
 }
