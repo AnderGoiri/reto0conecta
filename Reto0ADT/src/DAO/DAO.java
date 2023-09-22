@@ -12,6 +12,7 @@ import java.util.Set;
 
 import exceptions.ServerException;
 import java.sql.SQLException;
+import model.Convocatoria;
 
 /**
  *
@@ -22,9 +23,25 @@ public interface DAO {
     /**
      *
      * @return @throws java.lang.ServerException
+     * @param ud
+     * @throws exceptions.ServerException @throws java.lang.ServerException
+     * @throws java.sql.SQLException
      */
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException, SQLException;
 
     public void addUnidadDidactica(UnidadDidactica ud) throws ServerException,SQLException;
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException;
+
+    /**
+     * Inserts a relation between an UnidadDidactica and an Enunciado into the
+     * database.
+     *
+     * @param udId The ID of the UnidadDidactica.
+     * @param enunciadoId The ID of the Enunciado.
+     * @throws SQLException If a database access error occurs.
+     * @throws ServerException If an application-specific server error occurs.
+     */
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException;
 
     void addConvocatoria(Convocatoria c);
 
