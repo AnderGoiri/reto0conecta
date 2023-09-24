@@ -7,7 +7,6 @@ package model;
 
 /**
  *
- * @author Ander Goirigolzarri Iturburu 
  * @author Ander Goirigolzarri Iturburu
  */
 public class UnidadDidactica {
@@ -68,7 +67,6 @@ public class UnidadDidactica {
         this.evaluacion = evaluacion;
         this.descripcion = descripcion;
     }
- 
 
     public UnidadDidactica() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

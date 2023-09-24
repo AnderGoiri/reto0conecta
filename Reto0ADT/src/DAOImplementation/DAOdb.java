@@ -22,7 +22,6 @@ import model.UnidadDidactica;
 
 /**
  * Implementation class aimed for the interaction with the Data Base
- * 
  *
  * @author 2dam, Ander Goirigolzarri Iturburu
  */
@@ -34,7 +33,9 @@ public class DAOdb implements DAO {
     protected ResultSet rset;
     protected CallableStatement cst;
     protected Set<UnidadDidactica> allUD;
+    protected Set<Enunciado> allEnunciado;
     protected UnidadDidactica ud;
+    protected Enunciado enunciado;
 
     /**
      * Adds a new "UnidadDidactica" to the database.
@@ -44,18 +45,13 @@ public class DAOdb implements DAO {
      * operation.
      * @throws SQLException If a database access error occurs or the SQL
      * execution fails.
+     * @author Ander Goirigolzarri Iturburu
      */
     @Override
     public void addUnidadDidactica(UnidadDidactica ud) throws SQLException, ServerException {
         try {
             con = conController.openConnection();
 
-            cst = con.prepareCall("INSERT INTO 'unidad' ('id','acronimo','titulo','evaluacion','descripcion')");
-            cst.setInt(1, ud.getId());
-            cst.setString(2, ud.getAcronimo());
-            cst.setString(3, ud.getTitulo());
-            cst.setString(4, ud.getEvaluacion());
-            cst.setString(5, ud.getDescripcion());
             stmt = con.prepareStatement("INSERT INTO `unidad` (`id`,`acronimo`, `titulo`, `evaluacion`, `descripcion`) VALUES (?,?,?,?,?)");
             stmt.setInt(1, ud.getId());
             stmt.setString(2, ud.getAcronimo());
@@ -63,13 +59,11 @@ public class DAOdb implements DAO {
             stmt.setString(4, ud.getEvaluacion());
             stmt.setString(5, ud.getDescripcion());
 
-            cst.executeUpdate();
             stmt.executeUpdate();
 
         } catch (SQLException e) {
             // Log the exception for debugging purposes
             Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
-            
 
             // Rethrow the SQLException as a ServerException
             throw new ServerException(e.getMessage());
@@ -95,6 +89,7 @@ public class DAOdb implements DAO {
      * database.
      * @throws SQLException If a database access error occurs.
      * @throws ServerException If an application-specific server error occurs.
+     * @author Ander Goirigolzarri Iturburu
      */
     @Override
     public Set<UnidadDidactica> getAllUnidadDidactica() throws SQLException, ServerException {
@@ -146,6 +141,7 @@ public class DAOdb implements DAO {
      * @param enunciadoId The ID of the Enunciado.
      * @throws SQLException If a database access error occurs.
      * @throws ServerException If an application-specific server error occurs.
+     * @author Ander Goirigolzarri Iturburu
      */
     @Override
     public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException {
@@ -162,7 +158,7 @@ public class DAOdb implements DAO {
             System.out.println(e.getMessage());
 
             // Log the exception for debugging purposes
-            //Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
+            // Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
             // Rethrow the SQLException as a ServerException
             throw new ServerException(e.getMessage());
         } finally {
@@ -178,6 +174,47 @@ public class DAOdb implements DAO {
                 Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
             }
         }
+    }
+
+    @Override
+    /**
+     * 
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public Enunciado returnEnunciadofromUD(UnidadDidactica UD) throws SQLException, ServerException {
+        try {
+            
+            // Obtener todos las Unidades Didacticas
+            allUD = getAllUnidadDidactica();
+            String auxAcronimoUD = chooseUnidadDidactica(allUD);
+            
+            //Con el acronimo de la unidad didactica buscar sus enunciados
+            
+            allEnunciado = getAllEnunciado();
+            int auxIdEnunicado = chooseEnunciado(allEnunciado);
+            
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+            // Log the exception for debugging purposes
+            // Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
+            // Rethrow the SQLException as a ServerException
+            throw new ServerException(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                // Handle or log any potential exceptions while closing resources
+                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
+            }
+        }
+        return enunciado;
     }
 
     @Override
