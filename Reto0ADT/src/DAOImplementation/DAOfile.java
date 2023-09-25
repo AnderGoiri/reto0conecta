@@ -141,5 +141,15 @@ public class DAOfile implements DAO{
     public HashSet<Enunciado> getEnunciados() throws ServerException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

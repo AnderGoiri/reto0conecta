@@ -56,7 +56,7 @@ public interface DAO {
      */
     public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException;
 
-    public Enunciado returnEnunciadofromUD(UnidadDidactica UD)throws SQLException, ServerException;
+    //dspublic Enunciado returnEnunciadofromUD(UnidadDidactica UD)throws SQLException, ServerException;
 
     void addConvocatoria(Convocatoria c);
 

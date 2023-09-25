@@ -26,18 +26,6 @@ public class Main extends Application{
        
         Controller cont = new Controller();
         cont.run();
-
-       
-
-
-        /*if (Desktop.isDesktopSupported()) {
-    try {
-        File myFile = new File("C:\\Users\\2dam\\Downloads\\2DAM_Reto0_Alumna_2023-24_Conecta.pdf");
-        Desktop.getDesktop().open(myFile);
-    } catch (IOException ex) {
-        // no application registered for PDFs
-    }
-}*/
     }   
 
     @Override

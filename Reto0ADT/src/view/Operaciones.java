@@ -14,6 +14,7 @@ import exceptions.ServerException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -26,7 +27,7 @@ import util.Util;
  */
 public class Operaciones {
 
-    public void CreateEnunciado() {
+    public void CreateEnunciado() throws SQLException {
 
         Enunciado enun = new Enunciado();
 
@@ -57,7 +58,34 @@ public class Operaciones {
         enun.setRuta(Util.introducirCadena());
 
         try {
+            
+            Set<UnidadDidactica> udSet = DAOFactory.getModel(0).getAllUnidadDidactica();
+            
+            
+            for(UnidadDidactica ud : udSet){
+                System.out.println(ud.getAcronimo());
+            }
+            
+            boolean continue_ = false;
+            UnidadDidactica udToInsert = null;
+            do{
+                
+                System.out.println("Seleccione una unidad didactica");
+                String udUser = Util.introducirCadena();
+            
+                
+                for(UnidadDidactica ud : udSet){
+                    if(ud.getAcronimo().equalsIgnoreCase(udUser))
+                    {
+                        udToInsert = ud;
+                        continue_ = true; 
+                    }
+                }
+                
+            }while(!continue_);
+            
             DAOFactory.getModel(0).addEnunciado(enun);
+            DAOFactory.getModel(0).insertUDEnunciadoRelation(udToInsert.getId(), enun.getId());
         } catch (ServerException ex) {
             System.out.println(ex.getMessage());
         }

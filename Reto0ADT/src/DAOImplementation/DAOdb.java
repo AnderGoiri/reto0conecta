@@ -115,47 +115,6 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    /**
-     * 
-     * @author Ander Goirigolzarri Iturburu
-     */
-    public Enunciado returnEnunciadofromUD(UnidadDidactica UD) throws SQLException, ServerException {
-        try {
-            
-            // Obtener todos las Unidades Didacticas
-            allUD = getAllUnidadDidactica();
-            String auxAcronimoUD = chooseUnidadDidactica(allUD);
-            
-            //Con el acronimo de la unidad didactica buscar sus enunciados
-            
-            allEnunciado = getAllEnunciado();
-            int auxIdEnunicado = chooseEnunciado(allEnunciado);
-            
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-            // Log the exception for debugging purposes
-            // Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
-            // Rethrow the SQLException as a ServerException
-            throw new ServerException(e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                // Handle or log any potential exceptions while closing resources
-                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
-            }
-        }
-        return enunciado;
-    }
-
-    @Override
     public void addEnunciado(Enunciado enunciado) throws ServerException {
 
         ResultSet rs = null;
@@ -241,5 +200,10 @@ public class DAOdb implements DAO {
 		
 		return enunciadoSet;	
 	}
+
+    @Override
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
