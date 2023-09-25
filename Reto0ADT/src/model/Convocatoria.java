@@ -18,6 +18,10 @@ public class Convocatoria {
     private String curso;
     private int idEnunciado;
 
+    public Convocatoria() {
+       
+    }
+
     public String getConvocatoria() {
         return convocatoria;
     }
@@ -63,5 +67,13 @@ public class Convocatoria {
         this.curso = curso;
         this.idEnunciado = idEnunciado;
     }
+    
+    public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso) {
+        this.convocatoria = convocatoria;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.curso = curso;
+    }
+    
     
 }

@@ -5,21 +5,21 @@
  */
 package DAOImplementation;
 
-import DAO.DAO;
-import exceptions.ServerException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Convocatoria;
 import model.Dificultad;
 import model.Enunciado;
+import DAO.DAO;
+import exceptions.ServerException;
+import java.io.IOException;
+import java.util.Set;
+import model.Convocatoria;
 import model.UnidadDidactica;
 
 /**
@@ -27,7 +27,7 @@ import model.UnidadDidactica;
  *
  * @author 2dam, Ander Goirigolzarri Iturburu
  */
-public class DAOdb implements DAO {
+public class DAOdb implements DAO{
 
     protected Connection con;
     protected PreparedStatement stmt;
@@ -50,25 +50,41 @@ public class DAOdb implements DAO {
      * @author Ander Goirigolzarri Iturburu
      */
     @Override
-    public void addUnidadDidactica(UnidadDidactica ud) throws SQLException, ServerException {
+    public UnidadDidactica addUnidadDidactica() throws Exception {
         try {
-            con = conController.openConnection();
+            Scanner scanner = new Scanner(System.in);
 
-            cst = con.prepareCall("INSERT INTO `unidad` (`id`,`acronimo`, `titulo`, `evaluacion`, `descripcion`) VALUES (?,?,?,?,?)");
+            System.out.println("Introduce el código de la Unidad Didáctica:");
+            int id = Integer.parseInt(scanner.nextLine());
+
+            System.out.println("Introduce el acrónimo de la Unidad Didáctica:");
+            String acronimo = scanner.nextLine();
+
+            System.out.println("Introduce el título de la Unidad Didáctica:");
+            String titulo = scanner.nextLine();
+
+            System.out.println("Introduce el tipo de evaluación de la Unidad Didáctica:");
+            String evaluacion = scanner.nextLine();
+
+            System.out.println("Introduce la descripción de la Unidad Didáctica:");
+            String descripcion = scanner.nextLine();
+
+            UnidadDidactica UD = new UnidadDidactica(id, acronimo, titulo, evaluacion, descripcion);
+
+            System.out.println("Código: " + UD.getId());
+            System.out.println("Acrónimo: " + UD.getAcronimo());
+            System.out.println("Título: " + UD.getTitulo());
+            System.out.println("Evaluación: " + UD.getEvaluacion());
+            System.out.println("Descripción: " + UD.getDescripcion());
+            //AGI 20/09: Estaría bien implementar una confirmación antes de crear cada objeto. Podríamos usar los métodos de la clase Util que empleabamos el año pasado
+            //System.out.println("¿Desea confirmar la creación de esta Unidad Didáctica?");
             
-            cst.setInt(1, ud.getId());
-            cst.setString(2, ud.getAcronimo());
-            cst.setString(3, ud.getTitulo());
-            cst.setString(4, ud.getEvaluacion());
-            cst.setString(5, ud.getDescripcion());
-
-            cst.execute();
-
-        } catch (SQLException e) {
-          throw new ServerException(e.getMessage());
+            return UD;
+            
+        } catch (Exception e) {
+            System.out.println("Se ha producido un error: " + e.getMessage());
+            return null;
         }
-        
-        conController.closeConnection(stmt, con);
     }
 
     /**
@@ -116,7 +132,7 @@ public class DAOdb implements DAO {
 
     @Override
     public void addEnunciado(Enunciado enunciado) throws ServerException {
-
+    
         ResultSet rs = null;
         try {
             con = conController.openConnection();
@@ -124,39 +140,36 @@ public class DAOdb implements DAO {
             Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+		try {
+			CallableStatement cst = con.prepareCall("INSERT INTO `enunciado` (`id`,`descripcion`, `nivel`, `disponible`, `ruta`) VALUES (?,?,?,?,?)");
+			
+			cst.setInt(1,enunciado.getId());
+			cst.setString(2,enunciado.getDescripcion());
+			cst.setString(3,enunciado.getNivel().toString());
+                        int disponible = enunciado.isDisponible() ? 1: 0;
+                        cst.setInt(4,disponible);
+                        cst.setString(5, enunciado.getRuta());
+			cst.execute();
+			
+			
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+		
+		conController.closeConnection(stmt, con);
+		
         
-        try {
-            CallableStatement cst = con.prepareCall("INSERT INTO `enunciado` (`id`,`descripcion`, `nivel`, `disponible`, `ruta`) VALUES (?,?,?,?,?)");
-
-            cst.setInt(1, enunciado.getId());
-            cst.setString(2, enunciado.getDescripcion());
-            cst.setString(3, enunciado.getNivel().toString());
-            int disponible = enunciado.isDisponible() ? 1 : 0;
-            cst.setInt(4, disponible);
-            cst.setString(5, enunciado.getRuta());
-            cst.execute();
-
-        } catch (SQLException e) {
-            throw new ServerException(e.getMessage());
-        }
-
-        conController.closeConnection(stmt, con);
-
     }
 
     @Override
     public void checkUnidadDidactica() {
-
+    
     }
 
     @Override
     public void showEnunciadoByUnidadDidactica() {
-
-    }
-
-    @Override
-    public void showConvocatoria() {
-    }
+    
+    }   
 
     @Override
     public void addConvocatoria(Convocatoria c) {
@@ -164,11 +177,21 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    public Set<Convocatoria> checkConvocatoria(int idEnun) {
+    public boolean checkConvocatoria(int idEnun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
+    public Set<Convocatoria> showConvocatoria(int idEnun) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /*@Override
+    public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException {
+        return false;
+    }*/
+    
+    
     public HashSet<Enunciado> getEnunciados() throws ServerException {
 	ResultSet rs = null;
 	HashSet<Enunciado> enunciadoSet = null;
