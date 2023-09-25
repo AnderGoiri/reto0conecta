@@ -178,13 +178,14 @@ public class DAOfile implements DAO{
      * @return
      * @throws IOException 
      */
-    @Override
+    /*@Override
     public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException {
         FileOutputStream fos = null;
         ObjectOutputStream moos = null;
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
+        boolean exists = false;
         
         Convocatoria c = null;
         
@@ -196,11 +197,14 @@ public class DAOfile implements DAO{
                     if (Convo == c.getConvocatoria()){
                         c.setConvocatoria(Convo);
                         i = numConvocatorias;
+                        exists = true;
                     }
                 }  
-                fos = new FileOutputStream(convocatorias, true);
-                moos = new MyObjectOutputStream(fos);  
-                moos.writeObject(c);
+                if (exists == false){
+                    fos = new FileOutputStream(convocatorias, true);
+                    moos = new MyObjectOutputStream(fos);  
+                    moos.writeObject(c);
+                }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(DAOfile.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -217,6 +221,6 @@ public class DAOfile implements DAO{
                 }
             }
         }
-        
-    }
+        return exists;
+    }*/
 }

@@ -125,8 +125,10 @@ public class DAOdb implements DAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    @Override
+    /*@Override
     public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException {
         return false;
-    }
+    }*/
+    
+    
 }

@@ -18,6 +18,10 @@ public class Convocatoria {
     private String curso;
     private int idEnunciado;
 
+    public Convocatoria() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getConvocatoria() {
         return convocatoria;
     }

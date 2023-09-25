@@ -11,6 +11,9 @@ import java.util.logging.Logger;
 import model.Dificultad;
 import model.Enunciado;
 import exceptions.ServerException;
+import java.util.HashSet;
+import java.util.Set;
+import model.Convocatoria;
 import util.Util;
 
 /**
@@ -55,6 +58,48 @@ public class Operaciones {
             System.out.println(ex.getMessage());
         }
         
+    }
+    
+    public void CreateConvocatoria() {
+    	Convocatoria conv = new Convocatoria();
+        
+        System.out.println("Introduce el nombre.");
+        conv.setConvocatoria(Util.introducirCadena());
+
+        System.out.println("Introduce la descripción.");
+        conv.setDescripcion(Util.introducirCadena());
+        
+        System.out.println("Introduce la fecha.");
+        conv.setFecha(Util.leerFechaDMA());
+        
+        System.out.println("Introduce el curso.");
+        conv.setCurso(Util.introducirCadena());
+        
+        DAOFactory.getModel(0).();
+        System.out.println("Introduce el id del enunciado asignado a esta convocatoria.");
+        conv.setIdEnunciado(Util.leerInt());
+        
+        try {
+            DAOFactory.getModel(1).addConvocatoria(conv);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void ShowConvocatoria() {
+    	int idEnun = 0;
+    	Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
+    	int i = 0;
+    	
+    	System.out.println("Introduce el id del enunciado asignado a la convocatoria que buscas.");
+        idEnun = Util.leerInt();
+        
+        try {
+            setConvo = DAOFactory.getModel(1).showConvocatoria(idEnun);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
     
 }

@@ -33,6 +33,6 @@ public interface DAO {
     public boolean checkConvocatoria(int idEnun)throws IOException, ClassNotFoundException;
     public void showEnunciadoByUnidadDidactica();
     public Set<Convocatoria> showConvocatoria(int idEnun);
-    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException;
+    //public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException;
     //void viewEnunciado();
 }
