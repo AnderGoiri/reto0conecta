@@ -177,47 +177,6 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    /**
-     * 
-     * @author Ander Goirigolzarri Iturburu
-     */
-    public Enunciado returnEnunciadofromUD(UnidadDidactica UD) throws SQLException, ServerException {
-        try {
-            
-            // Obtener todos las Unidades Didacticas
-            allUD = getAllUnidadDidactica();
-            String auxAcronimoUD = chooseUnidadDidactica(allUD);
-            
-            //Con el acronimo de la unidad didactica buscar sus enunciados
-            
-            allEnunciado = getAllEnunciado();
-            int auxIdEnunicado = chooseEnunciado(allEnunciado);
-            
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-            // Log the exception for debugging purposes
-            // Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
-            // Rethrow the SQLException as a ServerException
-            throw new ServerException(e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                // Handle or log any potential exceptions while closing resources
-                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
-            }
-        }
-        return enunciado;
-    }
-
-    @Override
     public void addEnunciado(Enunciado enunciado) throws ServerException {
 
         ResultSet rs = null;
@@ -257,14 +216,6 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    public void addConvocatoria() {
-    }
-
-    @Override
-    public void checkConvocatoria() {
-    }
-
-    @Override
     public void showConvocatoria() {
     }
 
@@ -279,8 +230,31 @@ public class DAOdb implements DAO {
     }
 
     @Override
-    public void addConvocatoria(Convocatoria c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public HashSet<Enunciado> getAllEnunciadoFromUD() throws ServerException {
+        try {
+            con = conController.openConnection();
+            // String con la SQL query
+            String sql = null;
+
+            allEnunciado = new HashSet();
+
+            stmt = con.prepareStatement(sql);
+            rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                Enunciado enun = new Enunciado();
+                enun.setId(rset.getInt("id"));
+                enun.setDescripcion(rset.getString("descripcion"));
+                enun.setNivel(Dificultad.valueOf(rset.getString("nivel")));
+                enun.setRuta(rset.getString("ruta"));
+                allEnunciado.add(enun);
+            }
+            
+            conController.closeConnection(stmt, con);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return (HashSet<Enunciado>) allEnunciado;
     }
 
 }

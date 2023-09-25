@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 import model.Dificultad;
 import model.Enunciado;
 import exceptions.ServerException;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 import model.UnidadDidactica;
@@ -97,7 +99,9 @@ public class Operaciones {
     }
 
     /**
-     * Choose a "UnidadDidactica" from all the UnidadDidactica availables in the DataBase
+     * Choose a "UnidadDidactica" from all the UnidadDidactica availables in the
+     * DataBase
+     *
      * @param allUD: a Set with all the UnidadDidactica
      * @return acronimo: the shortenned name of the UnidadDidactica
      * @author Ander Goirigolzarri Iturburu
@@ -118,11 +122,12 @@ public class Operaciones {
 
     /**
      * Choose a "Enunciado" from all the Enunciado availables
+     *
      * @param allEnunciado: a Set with all the Enunciado
      * @return id: the Identity Number for the Enunciado
      * @author Ander Goirigolzarri Iturburu
      */
-    public int chooseEnunciado(Set<Enunciado> allEnunciado){
+    public int chooseEnunciado(Set<Enunciado> allEnunciado) {
         System.out.println("Lista de Enunciado:");
         int id;
         for (Enunciado enun : allEnunciado) {
@@ -133,5 +138,31 @@ public class Operaciones {
         id = sc.nextInt();
         return id;
     }
-    
+
+    /**
+     *
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public Enunciado returnEnunciadofromUD(UnidadDidactica UD) {
+
+        try {
+            Set<UnidadDidactica> allUD = new HashSet<>();
+            allUD = DAOFactory.getModel(0).getAllUnidadDidactica();
+
+            String auxAcronimoUD = chooseUnidadDidactica(allUD);
+
+            Set<Enunciado> allEnunciado = new HashSet<>();
+            //allEnunciado; metodo para recuperar los enunciados de una unidad didactica
+            
+            
+            //de allEnunciado sacar el enunciado que queremos y returnarlo
+            
+            return null;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        } catch (ServerException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return null;
+    }
 }
