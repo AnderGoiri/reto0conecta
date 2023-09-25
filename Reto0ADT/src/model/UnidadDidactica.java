@@ -7,15 +7,18 @@ package model;
 
 /**
  *
- * @author Ander Goirigolzarri Iturburu 
+ * @author Ander Goirigolzarri Iturburu
  */
 public class UnidadDidactica {
+
+    // --- Attributes ---
     private int id;
     private String acronimo;
     private String titulo;
     private String evaluacion;
     private String descripcion;
 
+    // --- Getters & Setters ---
     public int getId() {
         return id;
     }
@@ -56,6 +59,7 @@ public class UnidadDidactica {
         this.descripcion = descripcion;
     }
 
+    // --- Constructors ---
     public UnidadDidactica(int id, String acronimo, String titulo, String evaluacion, String descripcion) {
         this.id = id;
         this.acronimo = acronimo;
@@ -63,5 +67,9 @@ public class UnidadDidactica {
         this.evaluacion = evaluacion;
         this.descripcion = descripcion;
     }
- 
+
+    public UnidadDidactica() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

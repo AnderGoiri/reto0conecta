@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import model.Convocatoria;
 
+
 /**
  *
  * @author 2dam
@@ -22,11 +23,40 @@ import model.Convocatoria;
 public interface DAO {
 
     /**
+     * Adds a new "UnidadDidactica" to the database.
      *
-     * @return @throws java.lang.ServerException
+     * @param ud The UnidadDidactica object to be added.
+     * @throws ServerException If there is an issue with the server during the
+     * operation.
+     * @throws SQLException If a database access error occurs or the SQL
+     * execution fails.
+     * @author Ander Goirigolzarri Iturburu
      */
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException, SQLException;
 
-    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException,SQLException;
+    /**
+     * Retrieves all UnidadDidactica objects from the database.
+     *
+     * @return A Set containing all UnidadDidactica objects retrieved from the
+     * database.
+     * @throws SQLException If a database access error occurs.
+     * @throws ServerException If an application-specific server error occurs.
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException;
+
+    /**
+     * Inserts a relation between an UnidadDidactica and an Enunciado into the
+     * database.
+     *
+     * @param udId The ID of the UnidadDidactica.
+     * @param enunciadoId The ID of the Enunciado.
+     * @throws SQLException If a database access error occurs.
+     * @throws ServerException If an application-specific server error occurs.
+     */
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException;
+
+    public Enunciado returnEnunciadofromUD(UnidadDidactica UD)throws SQLException, ServerException;
 
     void addConvocatoria(Convocatoria c);
 

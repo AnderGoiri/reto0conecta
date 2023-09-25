@@ -24,7 +24,7 @@ import model.UnidadDidactica;
 
 /**
  * Implementation class aimed for the interaction with the Data Base
- * 
+ *
  * @author 2dam, Ander Goirigolzarri Iturburu
  */
 public class DAOdb implements DAO {
@@ -34,6 +34,10 @@ public class DAOdb implements DAO {
     protected DBConnection conController = new DBConnection();
     protected ResultSet rset;
     protected CallableStatement cst;
+    protected Set<UnidadDidactica> allUD;
+    protected Set<Enunciado> allEnunciado;
+    protected UnidadDidactica ud;
+    protected Enunciado enunciado;
 
     /**
      * Adds a new "UnidadDidactica" to the database.
@@ -43,6 +47,7 @@ public class DAOdb implements DAO {
      * operation.
      * @throws SQLException If a database access error occurs or the SQL
      * execution fails.
+     * @author Ander Goirigolzarri Iturburu
      */
     @Override
     public void addUnidadDidactica(UnidadDidactica ud) throws SQLException, ServerException {
@@ -64,6 +69,90 @@ public class DAOdb implements DAO {
         }
         
         conController.closeConnection(stmt, con);
+    }
+
+    /**
+     * Inserts a relation between an UnidadDidactica and an Enunciado into the
+     * database.
+     *
+     * @param udId The ID of the UnidadDidactica.
+     * @param enunciadoId The ID of the Enunciado.
+     * @throws SQLException If a database access error occurs.
+     * @throws ServerException If an application-specific server error occurs.
+     * @author Ander Goirigolzarri Iturburu
+     */
+    @Override
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException {
+        try {
+            con = conController.openConnection();
+
+            stmt = con.prepareStatement("INSERT INTO `unidad_enunciado` (`unidads_id`,`enunciados_id`) VALUES (?,?)");
+
+            stmt.setInt(1, udId);
+            stmt.setInt(2, enunciadoId);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+            // Log the exception for debugging purposes
+            // Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
+            // Rethrow the SQLException as a ServerException
+            throw new ServerException(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                // Handle or log any potential exceptions while closing resources
+                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
+            }
+        }
+    }
+
+    @Override
+    /**
+     * 
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public Enunciado returnEnunciadofromUD(UnidadDidactica UD) throws SQLException, ServerException {
+        try {
+            
+            // Obtener todos las Unidades Didacticas
+            allUD = getAllUnidadDidactica();
+            String auxAcronimoUD = chooseUnidadDidactica(allUD);
+            
+            //Con el acronimo de la unidad didactica buscar sus enunciados
+            
+            allEnunciado = getAllEnunciado();
+            int auxIdEnunicado = chooseEnunciado(allEnunciado);
+            
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+            // Log the exception for debugging purposes
+            // Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
+            // Rethrow the SQLException as a ServerException
+            throw new ServerException(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                // Handle or log any potential exceptions while closing resources
+                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
+            }
+        }
+        return enunciado;
     }
 
     @Override

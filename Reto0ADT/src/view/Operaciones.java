@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import model.UnidadDidactica;
 import util.Util;
 
@@ -137,4 +138,43 @@ public class Operaciones {
             }
         }
     }
+
+    /**
+     * Choose a "UnidadDidactica" from all the UnidadDidactica availables in the DataBase
+     * @param allUD: a Set with all the UnidadDidactica
+     * @return acronimo: the shortenned name of the UnidadDidactica
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public String chooseUnidadDidactica(Set<UnidadDidactica> allUD) {
+        System.out.println("Lista de Unidades Didácticas:");
+        String acronimo;
+        int index = 1;
+        for (UnidadDidactica ud : allUD) {
+            System.out.println(index + ". " + ud.getAcronimo());
+            index++;
+        }
+        System.out.println("Elija una Unidad Didáctica(introduzca su acrónimo)");
+        Scanner sc = new Scanner(System.in);
+        acronimo = sc.next();
+        return acronimo;
+    }
+
+    /**
+     * Choose a "Enunciado" from all the Enunciado availables
+     * @param allEnunciado: a Set with all the Enunciado
+     * @return id: the Identity Number for the Enunciado
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public int chooseEnunciado(Set<Enunciado> allEnunciado){
+        System.out.println("Lista de Enunciado:");
+        int id;
+        for (Enunciado enun : allEnunciado) {
+            System.out.println(enun.getId());
+        }
+        System.out.println("Elija un Enunciado");
+        Scanner sc = new Scanner(System.in);
+        id = sc.nextInt();
+        return id;
+    }
+    
 }
