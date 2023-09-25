@@ -102,7 +102,7 @@ public class Operaciones {
         }
     }
     
-    public void CreateConvocatoria() {
+    public void createConvocatoria() {
     	Convocatoria conv = new Convocatoria();
         
         System.out.println("Introduce el nombre.");
@@ -124,7 +124,7 @@ public class Operaciones {
         }
     }
     
-    public void ShowConvocatoria() {
+    public void showConvocatoria() {
     	int idEnun = 0;
     	Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
         Set<Enunciado> setEnun = new HashSet<Enunciado>();
@@ -137,9 +137,9 @@ public class Operaciones {
         
         for (Enunciado enun : setEnun){
             System.out.println("ID: " + enun.getId() + "Descripción: " + enun.getDescripcion() + "Nivel: " + enun.getNivel() + "Disponible: " + enun.isDisponible() + 
-                    "Ruta: " + enun.getRuta() + "Set: ");
+                    "Ruta: " + enun.getRuta());
         }
-    	System.out.println("Introduce el id del enunciado asignado a la convocatoria que buscas.");
+    	System.out.println("Introduce el id del enunciado asignado a la/las convocatoria que buscas.");
         idEnun = Util.leerInt();
         
         try {
@@ -147,7 +147,11 @@ public class Operaciones {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
+        System.out.println("Estas son las convocatorias asignadas al enunciado introducido.");
+         for (Convocatoria conv : setConvo){
+            System.out.println("Convocatoria: " + conv.getConvocatoria() + "Descripción: " + conv.getDescripcion() + "Fecha: " + conv.getFecha() + "Curso: " + conv.getCurso() + 
+                    "ID Enunciado asociado: " + conv.getIdEnunciado());
+        }
     }
 
     public void visualizeEnunciado(){

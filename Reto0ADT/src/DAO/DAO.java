@@ -39,4 +39,6 @@ public interface DAO {
     public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException;
     //void viewEnunciado();
     public HashSet<Enunciado> getEnunciados() throws ServerException;
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws SQLException, ServerException;
+
 }

@@ -39,7 +39,6 @@ public class DAOdb implements DAO {
     protected DBConnection conController = new DBConnection();
     protected ResultSet rset;
     protected CallableStatement cst;
-
     /**
      * Adds a new "UnidadDidactica" to the database.
      *
@@ -171,10 +170,5 @@ public class DAOdb implements DAO {
 		
 		return enunciadoSet;	
 	}
-    
-    public Set<UnidadDidactica> showUnidadDidactica(String idEnun){
-        return null;
-    
     }
-
 }
