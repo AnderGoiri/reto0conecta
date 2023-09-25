@@ -19,7 +19,7 @@ public class Convocatoria {
     private int idEnunciado;
 
     public Convocatoria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     public String getConvocatoria() {
@@ -67,5 +67,13 @@ public class Convocatoria {
         this.curso = curso;
         this.idEnunciado = idEnunciado;
     }
+    
+    public Convocatoria(String convocatoria, String descripcion, LocalDate fecha, String curso) {
+        this.convocatoria = convocatoria;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.curso = curso;
+    }
+    
     
 }

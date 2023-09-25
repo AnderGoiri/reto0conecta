@@ -9,12 +9,14 @@ import DAO.DAO;
 import exceptions.ServerException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-
+import DAO.DAO;
+import exceptions.ServerException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -31,11 +33,10 @@ import util.Util;
 public class DAOfile implements DAO{
     private File convocatorias = new File("convocatorias.obj");
     
-    @Override
     public UnidadDidactica addUnidadDidactica() {
         return null;
     }
-    
+
     /**
      * 
      * @param convocatorias
@@ -81,9 +82,11 @@ public class DAOfile implements DAO{
             }
         }
     }
+
     @Override
     public void addEnunciado(Enunciado enun) {
     }
+
     @Override
     public void checkUnidadDidactica() {}
 
@@ -171,6 +174,38 @@ public class DAOfile implements DAO{
         }
         return setConvo;
     }
+    @Override
+    public Set<Convocatoria> getConvocatorias() {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        int numConvocatorias = Util.calculoFichero(convocatorias);
+        
+        Convocatoria c = null;
+        Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
+        
+        if (convocatorias.exists()){
+            try {
+                ois = new ObjectInputStream(new FileInputStream(convocatorias));
+                for (int i = 0; i < numConvocatorias; i++){
+                    c = (Convocatoria) ois.readObject();
+                    setConvo.add(c);
+                }
+            } catch (IOException ex) {
+                
+            } catch (ClassNotFoundException ex) {
+               
+            } finally {
+                try {
+                    ois.close();
+                    fis.close();
+                } catch (Exception e) {
+
+                }
+            }
+        }
+        return setConvo;
+    }
+    
     /**
      * 
      * @param Convo
@@ -178,7 +213,7 @@ public class DAOfile implements DAO{
      * @return
      * @throws IOException 
      */
-    /*@Override
+    @Override
     public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException {
         FileOutputStream fos = null;
         ObjectOutputStream moos = null;
@@ -195,12 +230,12 @@ public class DAOfile implements DAO{
                 for (int i = 0; i < numConvocatorias; i++){
                     c = (Convocatoria) ois.readObject();
                     if (Convo == c.getConvocatoria()){
-                        c.setConvocatoria(Convo);
+                        c.setIdEnunciado(idEnun);
                         i = numConvocatorias;
                         exists = true;
                     }
                 }  
-                if (exists == false){
+                if (exists == true){
                     fos = new FileOutputStream(convocatorias, true);
                     moos = new MyObjectOutputStream(fos);  
                     moos.writeObject(c);
@@ -222,5 +257,11 @@ public class DAOfile implements DAO{
             }
         }
         return exists;
-    }*/
+    }
+    
+    @Override
+    public HashSet<Enunciado> getEnunciados() throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
