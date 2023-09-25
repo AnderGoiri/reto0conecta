@@ -46,7 +46,7 @@ public class Controller {
 				
 				break;
 			case 3:
-				operaciones.CreateEnunciado();
+				operaciones.createEnunciado();
 				break;
 			case 4:
 				

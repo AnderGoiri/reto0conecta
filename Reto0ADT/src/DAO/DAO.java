@@ -24,18 +24,7 @@ import model.Convocatoria;
  */
 public interface DAO {
 
-    /**
-     * Adds a new "UnidadDidactica" to the database.
-     *
-     * @param ud The UnidadDidactica object to be added.
-     * @throws ServerException If there is an issue with the server during the
-     * operation.
-     * @throws SQLException If a database access error occurs or the SQL
-     * execution fails.
-     * @author Ander Goirigolzarri Iturburu
-     */
-    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException, SQLException;
-
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException;
     /**
      * Retrieves all UnidadDidactica objects from the database.
      *
@@ -45,7 +34,7 @@ public interface DAO {
      * @throws ServerException If an application-specific server error occurs.
      * @author Ander Goirigolzarri Iturburu
      */
-    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException;
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException;
 
     /**
      * Inserts a relation between an UnidadDidactica and an Enunciado into the
@@ -56,7 +45,7 @@ public interface DAO {
      * @throws SQLException If a database access error occurs.
      * @throws ServerException If an application-specific server error occurs.
      */
-    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException;
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws ServerException;
 
     //dspublic Enunciado returnEnunciadofromUD(UnidadDidactica UD)throws SQLException, ServerException;
 

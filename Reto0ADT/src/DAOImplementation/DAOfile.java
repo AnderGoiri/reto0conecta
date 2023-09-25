@@ -5,8 +5,6 @@
  */
 package DAOImplementation;
 
-import DAO.DAO;
-import exceptions.ServerException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import DAO.DAO;
@@ -16,7 +14,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -265,12 +262,17 @@ public class DAOfile implements DAO{
     }
 
     @Override
-    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException {
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException {
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

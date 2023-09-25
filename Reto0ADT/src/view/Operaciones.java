@@ -30,7 +30,7 @@ import util.Util;
  */
 public class Operaciones {
 
-    public void CreateEnunciado() throws SQLException {
+    public void createEnunciado() {
 
         Enunciado enun = new Enunciado();
 
@@ -60,36 +60,64 @@ public class Operaciones {
         System.out.println("introduce ruta del enunciado");
         enun.setRuta(Util.introducirCadena());
 
+        
+            
         try {
+            DAOFactory.getModel(0).addEnunciado(enun);
             
-            Set<UnidadDidactica> udSet = DAOFactory.getModel(0).getAllUnidadDidactica();
-            
-            
+            Set<UnidadDidactica> udSet = DAOFactory.getModel(0).getAllUnidadDidactica();     
             for(UnidadDidactica ud : udSet){
                 System.out.println(ud.getAcronimo());
             }
-            
+        
             boolean continue_ = false;
             UnidadDidactica udToInsert = null;
             do{
                 
                 System.out.println("Seleccione una unidad didactica");
                 String udUser = Util.introducirCadena();
-            
-                
+                  
                 for(UnidadDidactica ud : udSet){
                     if(ud.getAcronimo().equalsIgnoreCase(udUser))
                     {
                         udToInsert = ud;
-                        continue_ = true; 
+                        break; 
                     }
                 }
+                DAOFactory.getModel(0).insertUDEnunciadoRelation(udToInsert.getId(), enun.getId());
                 
+                System.out.println("Seguir añadiendo unidades didacticas?");
+                continue_ = !Util.esBoolean();
             }while(!continue_);
+             
+            continue_ = false;
+            Set<Convocatoria> convSet = DAOFactory.getModel(1).getConvocatorias();
+            for(Convocatoria conv : convSet){
+                System.out.println(conv.getConvocatoria());
+            }
             
-            DAOFactory.getModel(0).addEnunciado(enun);
-            DAOFactory.getModel(0).insertUDEnunciadoRelation(udToInsert.getId(), enun.getId());
+            Convocatoria convToInsert= null;
+            do{
+                
+                System.out.println("Seleccione una convocatoria para asignarle un enunciado");
+                String convUser = Util.introducirCadena();
+                  
+                for(Convocatoria conv: convSet){
+                    if(conv.getConvocatoria().equalsIgnoreCase(convUser))
+                    {
+                        convToInsert = conv;
+                        break; 
+                    }
+                }
+                DAOFactory.getModel(1).addEnunciadoToConvocatoria(convUser, enun.getId());
+                System.out.println("Seguir asignando enunciados a convocatorias?");
+                continue_ = !Util.esBoolean();
+            }while(!continue_);
+             
+             
         } catch (ServerException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 

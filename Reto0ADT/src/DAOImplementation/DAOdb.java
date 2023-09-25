@@ -18,6 +18,7 @@ import model.Enunciado;
 import DAO.DAO;
 import exceptions.ServerException;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import model.Convocatoria;
 import model.UnidadDidactica;
@@ -39,7 +40,7 @@ public class DAOdb implements DAO{
     protected UnidadDidactica ud;
     protected Enunciado enunciado;
 
-    /**
+/**
      * Adds a new "UnidadDidactica" to the database.
      *
      * @param ud The UnidadDidactica object to be added.
@@ -50,43 +51,40 @@ public class DAOdb implements DAO{
      * @author Ander Goirigolzarri Iturburu
      */
     @Override
-    public UnidadDidactica addUnidadDidactica() throws Exception {
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException {
         try {
-            Scanner scanner = new Scanner(System.in);
+            con = conController.openConnection();
 
-            System.out.println("Introduce el código de la Unidad Didáctica:");
-            int id = Integer.parseInt(scanner.nextLine());
+            stmt = con.prepareStatement("INSERT INTO `unidad` (`id`,`acronimo`, `titulo`, `evaluacion`, `descripcion`) VALUES (?,?,?,?,?)");
+            stmt.setInt(1, ud.getId());
+            stmt.setString(2, ud.getAcronimo());
+            stmt.setString(3, ud.getTitulo());
+            stmt.setString(4, ud.getEvaluacion());
+            stmt.setString(5, ud.getDescripcion());
 
-            System.out.println("Introduce el acrónimo de la Unidad Didáctica:");
-            String acronimo = scanner.nextLine();
+            stmt.executeUpdate();
 
-            System.out.println("Introduce el título de la Unidad Didáctica:");
-            String titulo = scanner.nextLine();
+        } catch (SQLException e) {
+            // Log the exception for debugging purposes
+            Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
 
-            System.out.println("Introduce el tipo de evaluación de la Unidad Didáctica:");
-            String evaluacion = scanner.nextLine();
-
-            System.out.println("Introduce la descripción de la Unidad Didáctica:");
-            String descripcion = scanner.nextLine();
-
-            UnidadDidactica UD = new UnidadDidactica(id, acronimo, titulo, evaluacion, descripcion);
-
-            System.out.println("Código: " + UD.getId());
-            System.out.println("Acrónimo: " + UD.getAcronimo());
-            System.out.println("Título: " + UD.getTitulo());
-            System.out.println("Evaluación: " + UD.getEvaluacion());
-            System.out.println("Descripción: " + UD.getDescripcion());
-            //AGI 20/09: Estaría bien implementar una confirmación antes de crear cada objeto. Podríamos usar los métodos de la clase Util que empleabamos el año pasado
-            //System.out.println("¿Desea confirmar la creación de esta Unidad Didáctica?");
-            
-            return UD;
-            
-        } catch (Exception e) {
-            System.out.println("Se ha producido un error: " + e.getMessage());
-            return null;
+            // Rethrow the SQLException as a ServerException
+            throw new ServerException(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                // Handle or log any potential exceptions while closing resources
+                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
+            }
         }
     }
-
+    
     /**
      * Inserts a relation between an UnidadDidactica and an Enunciado into the
      * database.
@@ -98,7 +96,7 @@ public class DAOdb implements DAO{
      * @author Ander Goirigolzarri Iturburu
      */
     @Override
-    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws SQLException, ServerException {
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws ServerException {
         try {
             con = conController.openConnection();
 
@@ -225,7 +223,17 @@ public class DAOdb implements DAO{
 	}
 
     @Override
-    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException, SQLException {
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<Convocatoria> getConvocatorias() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
