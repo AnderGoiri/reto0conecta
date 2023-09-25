@@ -127,8 +127,18 @@ public class Operaciones {
     public void ShowConvocatoria() {
     	int idEnun = 0;
     	Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
-    	int i = 0;
+        Set<Enunciado> setEnun = new HashSet<Enunciado>();
     	
+        try {
+            setEnun = DAOFactory.getModel(0).getEnunciados();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        for (Enunciado enun : setEnun){
+            System.out.println("ID: " + enun.getId() + "Descripción: " + enun.getDescripcion() + "Nivel: " + enun.getNivel() + "Disponible: " + enun.isDisponible() + 
+                    "Ruta: " + enun.getRuta() + "Set: ");
+        }
     	System.out.println("Introduce el id del enunciado asignado a la convocatoria que buscas.");
         idEnun = Util.leerInt();
         
