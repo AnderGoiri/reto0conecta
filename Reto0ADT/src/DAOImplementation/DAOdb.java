@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Convocatoria;
+import model.Dificultad;
 import model.Enunciado;
 import model.UnidadDidactica;
 
@@ -178,14 +179,12 @@ public class DAOdb implements DAO {
 
     @Override
     public void addEnunciado(Enunciado enunciado) throws ServerException {
-
         ResultSet rs = null;
         try {
             con = conController.openConnection();
         } catch (ServerException ex) {
             Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         try {
             CallableStatement cst = con.prepareCall("INSERT INTO `enunciado` (`id`,`descripcion`, `nivel`, `disponible`, `ruta`) VALUES (?,?,?,?,?)");
 
@@ -200,9 +199,36 @@ public class DAOdb implements DAO {
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
         }
-
         conController.closeConnection(stmt, con);
+    }
 
+    @Override
+    public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException {
+        try {
+            con = conController.openConnection();
+            // String con la SQL query
+            String sql = "SELECT E.* FROM Enunciados E JOIN RelacionUnidadEnunciado RU ON E.idEnunciado = RU.idEnunciado WHERE RU.idUnidadDidactica = '?';";
+
+            allEnunciado = new HashSet();
+
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, udId);
+            
+            rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                Enunciado enun = new Enunciado();
+                enun.setId(rset.getInt("id"));
+                enun.setDescripcion(rset.getString("descripcion"));
+                enun.setNivel(Dificultad.valueOf(rset.getString("nivel")));
+                enun.setRuta(rset.getString("ruta"));
+                allEnunciado.add(enun);
+            }
+            conController.closeConnection(stmt, con);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return (HashSet<Enunciado>) allEnunciado;
     }
 
     @Override
@@ -227,34 +253,6 @@ public class DAOdb implements DAO {
     @Override
     public Set<Convocatoria> checkConvocatoria(int idEnun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public HashSet<Enunciado> getAllEnunciadoFromUD() throws ServerException {
-        try {
-            con = conController.openConnection();
-            // String con la SQL query
-            String sql = null;
-
-            allEnunciado = new HashSet();
-
-            stmt = con.prepareStatement(sql);
-            rset = stmt.executeQuery();
-
-            while (rset.next()) {
-                Enunciado enun = new Enunciado();
-                enun.setId(rset.getInt("id"));
-                enun.setDescripcion(rset.getString("descripcion"));
-                enun.setNivel(Dificultad.valueOf(rset.getString("nivel")));
-                enun.setRuta(rset.getString("ruta"));
-                allEnunciado.add(enun);
-            }
-            
-            conController.closeConnection(stmt, con);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return (HashSet<Enunciado>) allEnunciado;
     }
 
 }

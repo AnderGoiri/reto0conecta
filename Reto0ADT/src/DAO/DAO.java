@@ -58,7 +58,7 @@ public interface DAO {
 
     public Enunciado returnEnunciadofromUD(UnidadDidactica UD)throws SQLException, ServerException;
     
-    public HashSet<Enunciado> getAllEnunciadoFromUD() throws ServerException;
+    public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException;
 
     void addConvocatoria(Convocatoria c);
 
