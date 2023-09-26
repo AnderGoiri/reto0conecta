@@ -224,7 +224,44 @@ public class DAOdb implements DAO{
 
     @Override
     public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try {
+            allUD = new HashSet<UnidadDidactica>();
+
+            con = conController.openConnection();
+
+            stmt = con.prepareStatement("SELECT * FROM unidad");
+            rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                ud = new UnidadDidactica();
+
+                ud.setId(rset.getInt("id"));
+                ud.setAcronimo(rset.getString("acronimo"));
+                ud.setTitulo(rset.getString("titulo"));
+                ud.setEvaluacion(rset.getString("evaluacion"));
+                ud.setDescripcion(rset.getString("descripcion"));
+
+                allUD.add(ud);
+            }
+        } catch (SQLException e) {
+            // Log the exception for debugging purposes
+            Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, e);
+            // Rethrow the SQLException as a ServerException
+            throw new ServerException(e.getMessage());
+        } finally {
+            try {
+                if (cst != null) {
+                    cst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                // Handle or log any potential exceptions while closing resources
+                Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
+            }
+        }
+        return allUD;
     }
 
     @Override

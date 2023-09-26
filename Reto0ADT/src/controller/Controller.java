@@ -26,7 +26,7 @@ public class Controller {
         Operaciones operaciones = new Operaciones();
         menu = new Menu();
         
-        String enunciadoExamen = "1. Crear una unidad didáctica y convocatoria (Convocatoria) de examen.\n" +
+        String enunciadoExamen = "1. Crear una unidad didáctica.\n" +
                                  "2. Crear Convocatoria.\n" +
                                  "3. Crear Enunciado.\n" +
                                  "4. Consultar Enunciado en los que se trata una unidad didactica concreta.\n" +
@@ -43,7 +43,7 @@ public class Controller {
                                 operaciones.createUnidadDidactica();
 				break;
 			case 2:
-				
+				operaciones.CreateConvocatoria();
 				break;
 			case 3:
 				operaciones.createEnunciado();
@@ -52,7 +52,7 @@ public class Controller {
 				
 				break;
 			case 5:
-	
+                                operaciones.ShowConvocatoria();
 				break;
                         case 6:
                                 operaciones.visualizeEnunciado();

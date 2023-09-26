@@ -226,7 +226,7 @@ public class DAOfile implements DAO{
                 ois = new ObjectInputStream(new FileInputStream(convocatorias));
                 for (int i = 0; i < numConvocatorias; i++){
                     c = (Convocatoria) ois.readObject();
-                    if (Convo == c.getConvocatoria()){
+                    if (Convo.equalsIgnoreCase(c.getConvocatoria())){
                         c.setIdEnunciado(idEnun);
                         i = numConvocatorias;
                         exists = true;
