@@ -64,4 +64,5 @@ public interface DAO {
     public boolean checkConvocatoria(int idEnun)throws IOException, ClassNotFoundException;
     public void addConvocatoria(Convocatoria c);
     public HashSet<Enunciado> getEnunciados() throws ServerException;
+    
 }

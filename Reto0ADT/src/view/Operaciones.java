@@ -184,15 +184,30 @@ public class Operaciones {
     public void ShowConvocatoria() {
     	int idEnun = 0;
     	Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
-    	int i = 0;
+        Set<Enunciado> setEnun = new HashSet<Enunciado>();
     	
-    	System.out.println("Introduce el id del enunciado asignado a la convocatoria que buscas.");
+        try {
+            setEnun = DAOFactory.getModel(0).getEnunciados();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        for (Enunciado enun : setEnun){
+            System.out.println("ID: " + enun.getId() + " Descripción: " + enun.getDescripcion() + " Nivel: " + enun.getNivel() + " Disponible: " + enun.isDisponible() + 
+                    " Ruta: " + enun.getRuta());
+        }
+    	System.out.println("Introduce el id del enunciado asignado a la/las convocatoria que buscas.");
         idEnun = Util.leerInt();
         
         try {
             setConvo = DAOFactory.getModel(1).showConvocatoria(idEnun);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+        }
+        System.out.println("Estas son las convocatorias asignadas al enunciado introducido.");
+         for (Convocatoria conv : setConvo){
+            System.out.println("Convocatoria: " + conv.getConvocatoria() + " Descripción: " + conv.getDescripcion() + " Fecha: " + conv.getFecha() + " Curso: " + conv.getCurso() + 
+                    " ID Enunciado asociado: " + conv.getIdEnunciado());
         }
 
     }
