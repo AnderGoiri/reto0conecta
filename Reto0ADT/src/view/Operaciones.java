@@ -27,7 +27,7 @@ import util.Util;
  * @author 2dam
  */
 public class Operaciones {
-
+	
     public void CreateEnunciado() {
 
         Enunciado enun = new Enunciado();
@@ -102,6 +102,10 @@ public class Operaciones {
         }
     }
     
+    /**
+     * This method creates an object "Convocatoria", sets its attributes and calls a method from the File Implementation
+     * @author Jagoba Bartolomé Barroso
+     */
     public void createConvocatoria() {
     	Convocatoria conv = new Convocatoria();
         
@@ -119,11 +123,14 @@ public class Operaciones {
         
         try {
             DAOFactory.getModel(1).addConvocatoria(conv);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Se ha producido un error con los flujos de entrada o salida.");
         }
     }
-    
+    /**
+     * This method shows the wanted "Convocatoria" based on the "Enunciado" that the user selects.
+     * @author Jagoba Bartolomé Barroso
+     */
     public void showConvocatoria() {
     	int idEnun = 0;
     	Set<Convocatoria> setConvo = new HashSet<Convocatoria>();
@@ -131,8 +138,8 @@ public class Operaciones {
     	
         try {
             setEnun = DAOFactory.getModel(0).getEnunciados();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (ServerException ex) {
+            System.out.println("Se ha producido un error con el servidor.");
         }
         
         for (Enunciado enun : setEnun){
@@ -144,8 +151,10 @@ public class Operaciones {
         
         try {
             setConvo = DAOFactory.getModel(1).showConvocatoria(idEnun);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Se ha producido un error con los flujos de entrada o salida.");
+        } catch (ClassNotFoundException e) {
+        	System.out.println("Se ha producido un error.");
         }
         System.out.println("Estas son las convocatorias asignadas al enunciado introducido.");
          for (Convocatoria conv : setConvo){
@@ -155,7 +164,6 @@ public class Operaciones {
     }
 
     public void visualizeEnunciado(){
-        
         HashSet<Enunciado> enunSet = null;
         try {
             enunSet = DAOFactory.getModel(0).getEnunciados();
@@ -193,4 +201,3 @@ public class Operaciones {
         }
     }
 }
-

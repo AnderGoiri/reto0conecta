@@ -1,4 +1,5 @@
 /*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -36,14 +37,14 @@ public class DAOfile implements DAO{
     public UnidadDidactica addUnidadDidactica() {
         return null;
     }
-
+    
     /**
-     * 
-     * @param convocatorias
+     * This method adds an object "Convocatoria" to the file "convocatorias"
      * @param c 
      * This method takes the newly created Convocatoria c and adds it to a file named convocatorias
+     * @throws IOException, FileNotFoundException 
      */
-    public void addConvocatoria(Convocatoria c) {
+    public void addConvocatoria(Convocatoria c) throws IOException {
         FileOutputStream fos = null;
         ObjectOutputStream moos = null;
 
@@ -52,15 +53,15 @@ public class DAOfile implements DAO{
                 fos = new FileOutputStream(convocatorias, true);
                 moos = new MyObjectOutputStream(fos);
                 moos.writeObject(c);
-            } catch (Exception e) {
-
-            } finally {
+			} catch (IOException e) {
+				throw new IOException();
+			} finally {
                 try {
                     moos.flush();
                     moos.close();
                     fos.close();
                 } catch (IOException e) {
-
+                	throw new IOException();
                 }
             }
         } else {
@@ -69,15 +70,15 @@ public class DAOfile implements DAO{
                 fos = new FileOutputStream(convocatorias);
                 oos = new ObjectOutputStream(fos);
                 oos.writeObject(c);
-            } catch (Exception e) {
-
+            } catch (IOException e) {
+				throw new IOException();
             } finally {
                 try {
                     oos.flush();
                     oos.close();
                     fos.close();
-                } catch (Exception e) {
-
+                } catch (IOException e) {
+                	throw new IOException();
                 }
             }
         }
@@ -89,11 +90,11 @@ public class DAOfile implements DAO{
 
     @Override
     public void checkUnidadDidactica() {}
-
+    
     /**
-     *
+     * This method checks if an object "Convocatoria" has an id from "Enunciado" associated with it. Returns a boolean.
      * @param idEnun
-     * @return boolean
+     * @return 
      * @throws java.io.IOException
      * @throws java.lang.ClassNotFoundException
      */
@@ -116,15 +117,13 @@ public class DAOfile implements DAO{
                     }
                 }
             } catch (IOException ex) {
-                
-            } catch (ClassNotFoundException ex) {
-               
+            	throw new IOException();
             }finally {
                 try {
                     ois.close();
                     fis.close();
-                } catch (Exception e) {
-
+                } catch (IOException e) {
+                	throw new IOException();
                 }
             }
         }
@@ -137,12 +136,14 @@ public class DAOfile implements DAO{
     }
     
     /**
-     * 
+     * This method returns a set of "Convocatoria" that have an id from "Enunciado" in their attributes
      * @param idEnun
-     * @return Set de Convocatoria
+     * @return 
+     * @throws ClassNotFoundException 
+     * @throws IOException 
      */
     @Override
-    public Set<Convocatoria> showConvocatoria(int idEnun) {
+    public Set<Convocatoria> showConvocatoria(int idEnun) throws ClassNotFoundException, IOException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
@@ -159,11 +160,11 @@ public class DAOfile implements DAO{
                         setConvo.add(c);
                     }
                 }
-            } catch (IOException ex) {
-                
-            } catch (ClassNotFoundException ex) {
-               
-            } finally {
+            } catch (IOException ex) {    
+            	throw new IOException();
+            } catch (ClassNotFoundException e) {
+				throw new ClassNotFoundException();
+			} finally {
                 try {
                     ois.close();
                     fis.close();
@@ -174,8 +175,15 @@ public class DAOfile implements DAO{
         }
         return setConvo;
     }
+    
+    /**
+     * This method reads the file "convocatorias" and returns a set of "Convocatoria" 
+     * @return
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     */
     @Override
-    public Set<Convocatoria> getConvocatorias() {
+    public Set<Convocatoria> getConvocatorias() throws IOException, ClassNotFoundException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
@@ -191,15 +199,15 @@ public class DAOfile implements DAO{
                     setConvo.add(c);
                 }
             } catch (IOException ex) {
-                
-            } catch (ClassNotFoundException ex) {
-               
-            } finally {
+            	throw new IOException();
+            } catch (ClassNotFoundException e) {
+            	throw new ClassNotFoundException();
+			} finally {
                 try {
                     ois.close();
                     fis.close();
-                } catch (Exception e) {
-
+                } catch (IOException e) {
+                	throw new IOException();
                 }
             }
         }
@@ -207,17 +215,17 @@ public class DAOfile implements DAO{
     }
     
     /**
-     * 
+     * This method adds an existing id from "Enunciado" into an object "Convocatoria"
      * @param Convo
      * @param idEnun
      * @return
      * @throws IOException 
+     * @throws ClassNotFoundException 
      */
     @Override
-    public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException {
+    public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException, ClassNotFoundException{
         FileOutputStream fos = null;
         ObjectOutputStream moos = null;
-        FileInputStream fis = null;
         ObjectInputStream ois = null;
         int numConvocatorias = Util.calculoFichero(convocatorias);
         boolean exists = false;
@@ -229,30 +237,33 @@ public class DAOfile implements DAO{
                 ois = new ObjectInputStream(new FileInputStream(convocatorias));
                 for (int i = 0; i < numConvocatorias; i++){
                     c = (Convocatoria) ois.readObject();
-                    if (Convo == c.getConvocatoria()){
+                    if (Convo.equals(c.getConvocatoria()) ){
                         c.setIdEnunciado(idEnun);
                         i = numConvocatorias;
                         exists = true;
                     }
                 }  
+                try {
+                	ois.close();
+                } catch (IOException e){
+                	throw new IOException();
+                }
                 if (exists == true){
                     fos = new FileOutputStream(convocatorias, true);
                     moos = new MyObjectOutputStream(fos);  
                     moos.writeObject(c);
                 }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(DAOfile.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(DAOfile.class.getName()).log(Level.SEVERE, null, ex);
+            	throw new IOException();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(DAOfile.class.getName()).log(Level.SEVERE, null, ex);
+            	throw new ClassNotFoundException();
             } finally {
                 try {
                     moos.flush();
                     moos.close();
                     fos.close();
-                } catch (Exception e){
-                    
+                } catch (IOException e){
+                	throw new IOException();
                 }
             }
         }
@@ -263,5 +274,11 @@ public class DAOfile implements DAO{
     public HashSet<Enunciado> getEnunciados() throws ServerException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+	@Override
+	public Set<UnidadDidactica> getAllUnidadDidactica() throws SQLException, ServerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
