@@ -6,8 +6,6 @@
 package view;
 
 import Factory.DAOFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Dificultad;
 import model.Enunciado;
 import exceptions.ServerException;
@@ -140,24 +138,38 @@ public class Operaciones {
     }
 
     /**
+     * Returns an Enunciado associated with a given Unidad Didactica (UD) and
+     * chosen Enunciado ID.
+     *
+     * @param UD The Unidad Didactica for which an Enunciado is to be retrieved.
+     * @return The Enunciado associated with the provided Unidad Didactica and
+     * Enunciado ID, or null if not found.
      *
      * @author Ander Goirigolzarri Iturburu
      */
     public Enunciado returnEnunciadofromUD(UnidadDidactica UD) {
-
         try {
             Set<UnidadDidactica> allUD = new HashSet<>();
             allUD = DAOFactory.getModel(0).getAllUnidadDidactica();
-
             String auxAcronimoUD = chooseUnidadDidactica(allUD);
 
+            int udId = 0;
+            for (UnidadDidactica unidad : allUD) {
+                if (unidad.getAcronimo().equals(auxAcronimoUD)) {
+                    udId = unidad.getId();
+                }
+            }
             Set<Enunciado> allEnunciado = new HashSet<>();
-            //allEnunciado; metodo para recuperar los enunciados de una unidad didactica
-            
-            
-            //de allEnunciado sacar el enunciado que queremos y returnarlo
-            
-            return null;
+            allEnunciado = DAOFactory.getModel(0).getAllEnunciadoFromUD(udId);
+
+            int auxEnunciadoId = chooseEnunciado(allEnunciado);
+            Enunciado enunciado = null;
+            for (Enunciado enun : allEnunciado) {
+                if (enun.getId() == auxEnunciadoId) {
+                    enunciado = enun;
+                }
+            }
+            return enunciado;
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         } catch (ServerException ex) {

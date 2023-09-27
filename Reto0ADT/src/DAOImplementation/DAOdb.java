@@ -202,6 +202,16 @@ public class DAOdb implements DAO {
         conController.closeConnection(stmt, con);
     }
 
+    /**
+     * Retrieves all Enunciado objects associated with a specific Unidad
+     * Didactica (UD) based on the provided UD ID.
+     *
+     * @param udId The ID of the UnidadDidactica.
+     * @return A HashSet containing Enunciado objects associated with the
+     * specified Unidad Didactica.
+     * @throws ServerException If an application-specific server error occurs.
+     * @author Ander Goirigolzarri Iturburu
+     */
     @Override
     public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException {
         try {
@@ -213,7 +223,7 @@ public class DAOdb implements DAO {
 
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, udId);
-            
+
             rset = stmt.executeQuery();
 
             while (rset.next()) {
