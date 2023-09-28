@@ -34,7 +34,7 @@ public class Operaciones {
      * This method creates an object "Enunciado", sets its attributes and calls a method from the DB Implementation
      * @author Andoni Sanz Alcalde
      */
-    public void createEnunciado() throws ClassNotFoundException {
+    public void createEnunciado() {
 
         Enunciado enun = new Enunciado();
 
@@ -121,6 +121,8 @@ public class Operaciones {
             System.out.println("Ocurrio un error en la base de datos");
         } catch (IOException ex) {
             System.out.println("Ocurrio un error de input/output");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Clase no encontrada");
         }
 
     }

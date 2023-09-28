@@ -23,7 +23,6 @@ public class Main extends Application{
      * @param args
      */
     public static void main(String[] args) {
-       System.out.println("java.version: "+System.getProperty("java.version"));
         Controller cont = new Controller();
         cont.run();
     }   

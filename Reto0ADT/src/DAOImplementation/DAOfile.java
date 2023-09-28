@@ -189,10 +189,14 @@ public class DAOfile implements DAO{
             	throw new IOException();
             } catch (ClassNotFoundException e) {
             	throw new ClassNotFoundException();
-			} finally {
+            } finally {
                 try {
-                    ois.close();
-                    fis.close();
+                    if(ois != null && fis != null)
+                    {
+                        ois.close();
+                        fis.close();
+                    }
+                   
                 } catch (IOException e) {
                 	throw new IOException();
                 }

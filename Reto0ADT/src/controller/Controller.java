@@ -20,7 +20,7 @@ public class Controller {
     
     public Controller(){}
     
-    public void run() throws ClassNotFoundException{
+    public void run(){
         
         int opc = 0;
         Operaciones operaciones = new Operaciones();
