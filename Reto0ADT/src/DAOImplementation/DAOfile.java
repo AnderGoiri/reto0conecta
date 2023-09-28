@@ -12,13 +12,10 @@ import DAO.DAO;
 import exceptions.ServerException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Convocatoria;
 import model.Enunciado;
 import model.UnidadDidactica;
@@ -85,8 +82,6 @@ public class DAOfile implements DAO{
     public void addEnunciado(Enunciado enun) {
     }
 
-    @Override
-    public void checkUnidadDidactica() {}
     
     /**
      * This method checks if an object "Convocatoria" has an id from "Enunciado" associated with it. Returns a boolean.
@@ -125,11 +120,6 @@ public class DAOfile implements DAO{
             }
         }
         return encontrado;
-    }
-    
-    @Override
-    public void showEnunciadoByUnidadDidactica() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
@@ -272,10 +262,25 @@ public class DAOfile implements DAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-	@Override
-	public Set<UnidadDidactica> getAllUnidadDidactica() throws SQLException, ServerException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException {
+            // TODO Auto-generated method stub
+            return null;
+}
+
+    @Override
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

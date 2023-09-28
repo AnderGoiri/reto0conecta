@@ -1,70 +1,121 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Esta interfaz define las operaciones que pueden realizarse en la base de datos
+ * relacionadas con las entidades UnidadDidactica, Enunciado y Convocatoria.
+ * Cada método en esta interfaz representa una operación específica que puede
+ * llevarse a cabo en la base de datos.
+ *
+ * @author 2dam
  */
 package DAO;
 
 import model.Enunciado;
 import model.UnidadDidactica;
-
 import java.util.Set;
-
 import exceptions.ServerException;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import model.Convocatoria;
-import java.sql.SQLException;
 import java.util.HashSet;
 import model.Convocatoria;
 
-
-/**
- *
- * @author 2dam
- */
 public interface DAO {
 
-    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException;
     /**
-     * Retrieves all UnidadDidactica objects from the database.
+     * Agrega una UnidadDidactica a la base de datos.
      *
-     * @return A Set containing all UnidadDidactica objects retrieved from the
-     * database.
-     * @throws SQLException If a database access error occurs.
-     * @throws ServerException If an application-specific server error occurs.
-     * @author Ander Goirigolzarri Iturburu
+     * @param ud La UnidadDidactica que se agregará a la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     */
+    public void addUnidadDidactica(UnidadDidactica ud) throws ServerException;
+
+    /**
+     * Recupera todas las UnidadDidactica desde la base de datos.
+     *
+     * @return Un conjunto que contiene todas las UnidadDidactica recuperadas
+     *         desde la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
      */
     public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException;
 
     /**
-     * Inserts a relation between an UnidadDidactica and an Enunciado into the
-     * database.
+     * Inserta una relación entre una UnidadDidactica y un Enunciado en la base de datos.
      *
-     * @param udId The ID of the UnidadDidactica.
-     * @param enunciadoId The ID of the Enunciado.
-     * @throws SQLException If a database access error occurs.
-     * @throws ServerException If an application-specific server error occurs.
+     * @param udId El ID de la UnidadDidactica.
+     * @param enunciadoId El ID del Enunciado.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
      */
     public void insertUDEnunciadoRelation(int udId, int enunciadoId) throws ServerException;
 
     //dspublic Enunciado returnEnunciadofromUD(UnidadDidactica UD)throws SQLException, ServerException;
 
-
+    /**
+     * Agrega un Enunciado a la base de datos.
+     *
+     * @param enunciado El Enunciado que se agregará a la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     */
     void addEnunciado(Enunciado enunciado) throws ServerException;
 
-    void checkUnidadDidactica();
-
-
-    void showEnunciadoByUnidadDidactica();
-
-    
+    /**
+     * Agrega una Convocatoria a la base de datos.
+     *
+     * @param c La Convocatoria que se agregará a la base de datos.
+     * @throws IOException Si ocurre un error de E/S.
+     */
     public void addConvocatoria(Convocatoria c) throws IOException;
-    public boolean checkConvocatoria(int idEnun)throws IOException, ClassNotFoundException;
+
+    /**
+     * Verifica la existencia de una Convocatoria en función del ID de Enunciado.
+     *
+     * @param idEnun El ID del Enunciado.
+     * @return true si existe una Convocatoria relacionada con el ID de Enunciado.
+     * @throws IOException Si ocurre un error de E/S.
+     * @throws ClassNotFoundException Si la clase no se encuentra.
+     */
+    public boolean checkConvocatoria(int idEnun) throws IOException, ClassNotFoundException;
+
+    /**
+     * Muestra Convocatoria por ID de Enunciado.
+     *
+     * @param idEnun El ID del Enunciado.
+     * @return Un conjunto de Convocatorias relacionadas con el ID de Enunciado.
+     * @throws ClassNotFoundException Si la clase no se encuentra.
+     * @throws IOException Si ocurre un error de E/S.
+     */
     public Set<Convocatoria> showConvocatoria(int idEnun) throws ClassNotFoundException, IOException;
+
+    /**
+     * Obtiene todas las Convocatorias desde la base de datos.
+     *
+     * @return Un conjunto de todas las Convocatorias en la base de datos.
+     * @throws IOException Si ocurre un error de E/S.
+     * @throws ClassNotFoundException Si la clase no se encuentra.
+     */
     public Set<Convocatoria> getConvocatorias() throws IOException, ClassNotFoundException;
-    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException, ClassNotFoundException;;
+
+    /**
+     * Agrega un Enunciado a una Convocatoria en la base de datos.
+     *
+     * @param idConvo El ID de la Convocatoria.
+     * @param idEnun El ID del Enunciado.
+     * @return true si se agregó con éxito, false en caso contrario.
+     * @throws IOException Si ocurre un error de E/S.
+     * @throws ClassNotFoundException Si la clase no se encuentra.
+     */
+    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException, ClassNotFoundException;
+
+    /**
+     * Obtiene un conjunto de Enunciados desde la base de datos.
+     *
+     * @return Un conjunto de Enunciados desde la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     */
     public HashSet<Enunciado> getEnunciados() throws ServerException;
-    
+
+    /**
+     * Obtiene un conjunto de todos los Enunciados relacionados con una UnidadDidactica específica.
+     *
+     * @param udId El ID de la UnidadDidactica.
+     * @return Un conjunto de Enunciados relacionados con la UnidadDidactica especificada.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     */
+    public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException;
 }

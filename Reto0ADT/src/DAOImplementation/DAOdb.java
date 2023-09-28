@@ -21,6 +21,7 @@ import model.Convocatoria;
 import model.Dificultad;
 import model.Enunciado;
 import DAO.DAO;
+import Factory.DAOFactory;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.HashSet;
@@ -169,56 +170,11 @@ public class DAOdb implements DAO {
         return null;
     }
 
-    @Override
-    public void addConvocatoria(Convocatoria c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean checkConvocatoria(int idEnun) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public HashSet<Enunciado> getEnunciados() throws ServerException {
-	ResultSet rs = null;
-	HashSet<Enunciado> enunciadoSet = null;
-            try {
-			
-                con = conController.openConnection();
-		String OBTAINids = "SELECT * FROM enunciado";
-
-		enunciadoSet = new HashSet();
-		
-		
-		stmt = con.prepareStatement(OBTAINids);
-		rs = stmt.executeQuery();
-
-		while (rs.next()) {		
-                    Enunciado enun = new Enunciado();
-                    enun.setId(rs.getInt("id"));
-                    enun.setDescripcion(rs.getString("descripcion"));
-                    enun.setNivel(Dificultad.valueOf(rs.getString("nivel")));
-                    enun.setRuta(rs.getString("ruta"));
-                    enunciadoSet.add(enun);
-		}		
-
-		conController.closeConnection(stmt, con);
-
-		} catch (SQLException e) {
-                    throw new ServerException(e.getMessage());
-		}
-		
-		return enunciadoSet;	
-	}
-    }
-    
-    /*@Override
-    public boolean addEnunciadoToConvocatoria(String Convo, int idEnun) throws IOException {
-        return false;
-    }*/
+  
     
     
+    
+    @Override
     public HashSet<Enunciado> getEnunciados() throws ServerException {
 	ResultSet rs = null;
 	HashSet<Enunciado> enunciadoSet = null;
@@ -292,15 +248,58 @@ public class DAOdb implements DAO {
         }
         return allUD;
     }
-
+    
     @Override
-    public Set<Convocatoria> getConvocatorias() {
+    public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException {
+        try {
+            con = conController.openConnection();
+            // String con la SQL query
+            String sql = "SELECT E.* FROM Enunciado E JOIN unidad_enunciado RU ON E.id = RU.unidads_id WHERE RU.unidads_id = ?";
+
+            allEnunciado = new HashSet();
+
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, udId);
+
+            rset = stmt.executeQuery();
+
+            while (rset.next()) {
+                Enunciado enun = new Enunciado();
+                enun.setId(rset.getInt("id"));
+                enun.setDescripcion(rset.getString("descripcion"));
+                enun.setNivel(Dificultad.valueOf(rset.getString("nivel")));
+                enun.setRuta(rset.getString("ruta"));
+                allEnunciado.add(enun);
+            }
+            conController.closeConnection(stmt, con);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return (HashSet<Enunciado>) allEnunciado;
+    }
+    
+      @Override
+    public void addConvocatoria(Convocatoria c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException {
+    public boolean checkConvocatoria(int idEnun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Set<Convocatoria> showConvocatoria(int idEnun) throws ClassNotFoundException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<Convocatoria> getConvocatorias() throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addEnunciadoToConvocatoria(String idConvo, int idEnun) throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

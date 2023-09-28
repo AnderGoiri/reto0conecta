@@ -30,7 +30,7 @@ import util.Util;
  */
 public class Operaciones {
 
-    public void createEnunciado() {
+    public void createEnunciado() throws ClassNotFoundException {
 
         Enunciado enun = new Enunciado();
 
@@ -116,9 +116,9 @@ public class Operaciones {
              
              
         } catch (ServerException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Ocurrio un error en la base de datos");
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Ocurrio un error de input/output");
         }
 
     }
@@ -155,7 +155,6 @@ public class Operaciones {
             DAOFactory.getModel(0).addUnidadDidactica(UD);
         } catch (Exception e) {
             System.out.println("Se ha producido un error: " + e.getMessage());
-            System.out.println(e.getMessage());
         }
     }
     
@@ -260,7 +259,9 @@ public class Operaciones {
     }
 
     /**
-     * Choose a "UnidadDidactica" from all the UnidadDidactica availables in the DataBase
+     * Choose a "UnidadDidactica" from all the UnidadDidactica availables in the
+     * DataBase
+     *
      * @param allUD: a Set with all the UnidadDidactica
      * @return acronimo: the shortenned name of the UnidadDidactica
      * @author Ander Goirigolzarri Iturburu
@@ -281,11 +282,12 @@ public class Operaciones {
 
     /**
      * Choose a "Enunciado" from all the Enunciado availables
+     *
      * @param allEnunciado: a Set with all the Enunciado
      * @return id: the Identity Number for the Enunciado
      * @author Ander Goirigolzarri Iturburu
      */
-    public int chooseEnunciado(Set<Enunciado> allEnunciado){
+    public int chooseEnunciado(Set<Enunciado> allEnunciado) {
         System.out.println("Lista de Enunciado:");
         int id;
         for (Enunciado enun : allEnunciado) {
@@ -295,6 +297,48 @@ public class Operaciones {
         Scanner sc = new Scanner(System.in);
         id = sc.nextInt();
         return id;
+    }
+ /**
+     * Returns an Enunciado associated with a given Unidad Didactica (UD) and
+     * chosen Enunciado ID.
+     *
+     * @param UD The Unidad Didactica for which an Enunciado is to be retrieved.
+     * @return The Enunciado associated with the provided Unidad Didactica and
+     * Enunciado ID, or null if not found.
+     *
+     * @author Ander Goirigolzarri Iturburu
+     */
+    public void returnEnunciadofromUD() {
+        try {
+            Set<UnidadDidactica> allUD = new HashSet<>();
+            allUD = DAOFactory.getModel(0).getAllUnidadDidactica();
+            String auxAcronimoUD = chooseUnidadDidactica(allUD);
+
+            int udId = 0;
+            for (UnidadDidactica unidad : allUD) {
+                if (unidad.getAcronimo().equalsIgnoreCase(auxAcronimoUD)) {
+                    udId = unidad.getId();
+                }
+            }
+            Set<Enunciado> allEnunciado = new HashSet<>();
+            allEnunciado = DAOFactory.getModel(0).getAllEnunciadoFromUD(udId);
+
+            int auxEnunciadoId = chooseEnunciado(allEnunciado);
+            Enunciado enunciado = null;
+            for (Enunciado enun : allEnunciado) {
+                if (enun.getId() == auxEnunciadoId) {
+                    enunciado = enun;
+                }
+            }
+            
+            System.out.println("ID: "+enunciado.getId());
+            System.out.println("DESCRIPCION: "+enunciado.getDescripcion());
+            System.out.println("NIVEL: "+enunciado.getNivel().toString());
+            System.out.println("DISPONIBLE: "+enunciado.isDisponible());
+            System.out.println("RUTA: "+enunciado.getRuta()); 
+        } catch (ServerException ex) {
+            System.err.println("Ocurrio un error en la base de datos");
+        }
     }
     
 }

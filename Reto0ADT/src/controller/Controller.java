@@ -20,7 +20,7 @@ public class Controller {
     
     public Controller(){}
     
-    public void run(){
+    public void run() throws ClassNotFoundException{
         
         int opc = 0;
         Operaciones operaciones = new Operaciones();
@@ -49,7 +49,7 @@ public class Controller {
 				operaciones.createEnunciado();
 				break;
 			case 4:
-				
+				operaciones.returnEnunciadofromUD();
 				break;
 			case 5:
                                 operaciones.showConvocatoria();
