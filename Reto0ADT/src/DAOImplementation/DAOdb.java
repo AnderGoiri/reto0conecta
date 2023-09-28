@@ -5,19 +5,24 @@
  */
 package DAOImplementation;
 
+import DAO.DAO;
+import exceptions.ServerException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Convocatoria;
 import model.Dificultad;
 import model.Enunciado;
 import DAO.DAO;
-import exceptions.ServerException;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.HashSet;
 import java.util.Set;
 import model.Convocatoria;
@@ -28,7 +33,7 @@ import model.UnidadDidactica;
  *
  * @author 2dam, Ander Goirigolzarri Iturburu
  */
-public class DAOdb implements DAO{
+public class DAOdb implements DAO {
 
     protected Connection con;
     protected PreparedStatement stmt;
@@ -126,11 +131,13 @@ public class DAOdb implements DAO{
                 Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, "Error closing resources", ex);
             }
         }
+        
+        conController.closeConnection(stmt, con);
     }
 
     @Override
     public void addEnunciado(Enunciado enunciado) throws ServerException {
-    
+
         ResultSet rs = null;
         try {
             con = conController.openConnection();
@@ -138,36 +145,29 @@ public class DAOdb implements DAO{
             Logger.getLogger(DAOdb.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-		try {
-			CallableStatement cst = con.prepareCall("INSERT INTO `enunciado` (`id`,`descripcion`, `nivel`, `disponible`, `ruta`) VALUES (?,?,?,?,?)");
-			
-			cst.setInt(1,enunciado.getId());
-			cst.setString(2,enunciado.getDescripcion());
-			cst.setString(3,enunciado.getNivel().toString());
-                        int disponible = enunciado.isDisponible() ? 1: 0;
-                        cst.setInt(4,disponible);
-                        cst.setString(5, enunciado.getRuta());
-			cst.execute();
-			
-			
-		} catch (SQLException e) {
-			throw new ServerException(e.getMessage());
-		}
-		
-		conController.closeConnection(stmt, con);
-		
         
+        try {
+            CallableStatement cst = con.prepareCall("INSERT INTO `enunciado` (`id`,`descripcion`, `nivel`, `disponible`, `ruta`) VALUES (?,?,?,?,?)");
+
+            cst.setInt(1, enunciado.getId());
+            cst.setString(2, enunciado.getDescripcion());
+            cst.setString(3, enunciado.getNivel().toString());
+            int disponible = enunciado.isDisponible() ? 1 : 0;
+            cst.setInt(4, disponible);
+            cst.setString(5, enunciado.getRuta());
+            cst.execute();
+
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+
+        conController.closeConnection(stmt, con);
+
     }
 
-    @Override
-    public void checkUnidadDidactica() {
-    
+    public Set<Convocatoria> showConvocatoria() {
+        return null;
     }
-
-    @Override
-    public void showEnunciadoByUnidadDidactica() {
-    
-    }   
 
     @Override
     public void addConvocatoria(Convocatoria c) {
@@ -180,8 +180,37 @@ public class DAOdb implements DAO{
     }
 
     @Override
-    public Set<Convocatoria> showConvocatoria(int idEnun) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public HashSet<Enunciado> getEnunciados() throws ServerException {
+	ResultSet rs = null;
+	HashSet<Enunciado> enunciadoSet = null;
+            try {
+			
+                con = conController.openConnection();
+		String OBTAINids = "SELECT * FROM enunciado";
+
+		enunciadoSet = new HashSet();
+		
+		
+		stmt = con.prepareStatement(OBTAINids);
+		rs = stmt.executeQuery();
+
+		while (rs.next()) {		
+                    Enunciado enun = new Enunciado();
+                    enun.setId(rs.getInt("id"));
+                    enun.setDescripcion(rs.getString("descripcion"));
+                    enun.setNivel(Dificultad.valueOf(rs.getString("nivel")));
+                    enun.setRuta(rs.getString("ruta"));
+                    enunciadoSet.add(enun);
+		}		
+
+		conController.closeConnection(stmt, con);
+
+		} catch (SQLException e) {
+                    throw new ServerException(e.getMessage());
+		}
+		
+		return enunciadoSet;	
+	}
     }
     
     /*@Override

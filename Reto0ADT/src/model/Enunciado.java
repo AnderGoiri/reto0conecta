@@ -64,7 +64,7 @@ public class Enunciado {
     public Set<UnidadDidactica> getSetUnidades() {
         return setUnidades;
     }
-    
+
     public Enunciado(int id, String descripcion, Dificultad nivel, boolean disponible, String ruta, Set<UnidadDidactica> setUnidades) {
         this.id = id;
         this.descripcion = descripcion;

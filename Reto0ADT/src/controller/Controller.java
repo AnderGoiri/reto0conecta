@@ -43,7 +43,7 @@ public class Controller {
                                 operaciones.createUnidadDidactica();
 				break;
 			case 2:
-				operaciones.CreateConvocatoria();
+				operaciones.createConvocatoria();
 				break;
 			case 3:
 				operaciones.createEnunciado();
@@ -52,7 +52,7 @@ public class Controller {
 				
 				break;
 			case 5:
-                                operaciones.ShowConvocatoria();
+                                operaciones.showConvocatoria();
 				break;
                         case 6:
                                 operaciones.visualizeEnunciado();
