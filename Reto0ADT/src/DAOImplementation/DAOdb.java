@@ -135,7 +135,13 @@ public class DAOdb implements DAO {
         
         conController.closeConnection(stmt, con);
     }
-
+    /**
+     * Agrega un Enunciado a la base de datos.
+     *
+     * @param enunciado El Enunciado que se agregará a la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     * @author Andoni Sanz Alcalde
+     */
     @Override
     public void addEnunciado(Enunciado enunciado) throws ServerException {
 
@@ -166,14 +172,13 @@ public class DAOdb implements DAO {
 
     }
 
-    public Set<Convocatoria> showConvocatoria() {
-        return null;
-    }
-
-  
-    
-    
-    
+    /**
+     * Obtiene un conjunto de Enunciados desde la base de datos.
+     *
+     * @return Un conjunto de Enunciados desde la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     * @author Andoni Sanz Alcalde
+     */
     @Override
     public HashSet<Enunciado> getEnunciados() throws ServerException {
 	ResultSet rs = null;
@@ -205,8 +210,15 @@ public class DAOdb implements DAO {
 		}
 		
 		return enunciadoSet;	
-	}
+    }
 
+    /**
+     * Recupera todas las UnidadDidactica desde la base de datos.
+     *
+     * @return Un conjunto que contiene todas las UnidadDidactica recuperadas
+     *         desde la base de datos.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     */
     @Override
     public Set<UnidadDidactica> getAllUnidadDidactica() throws ServerException {
          try {
@@ -248,7 +260,13 @@ public class DAOdb implements DAO {
         }
         return allUD;
     }
-    
+    /**
+     * Obtiene un conjunto de todos los Enunciados relacionados con una UnidadDidactica específica.
+     *
+     * @param udId El ID de la UnidadDidactica.
+     * @return Un conjunto de Enunciados relacionados con la UnidadDidactica especificada.
+     * @throws ServerException Si ocurre un error específico de la aplicación.
+     */
     @Override
     public HashSet<Enunciado> getAllEnunciadoFromUD(int udId) throws ServerException {
         try {
@@ -278,7 +296,10 @@ public class DAOdb implements DAO {
         return (HashSet<Enunciado>) allEnunciado;
     }
     
-      @Override
+    public Set<Convocatoria> showConvocatoria() {
+        return null;
+    }
+    @Override
     public void addConvocatoria(Convocatoria c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

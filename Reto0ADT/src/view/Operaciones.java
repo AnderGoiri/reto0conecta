@@ -30,6 +30,10 @@ import util.Util;
  */
 public class Operaciones {
 
+    /**
+     * This method creates an object "Enunciado", sets its attributes and calls a method from the DB Implementation
+     * @author Andoni Sanz Alcalde
+     */
     public void createEnunciado() throws ClassNotFoundException {
 
         Enunciado enun = new Enunciado();
@@ -59,9 +63,7 @@ public class Operaciones {
 
         System.out.println("introduce ruta del enunciado");
         enun.setRuta(Util.introducirCadena());
-
-        
-            
+       
         try {
             DAOFactory.getModel(0).addEnunciado(enun);
             
@@ -122,7 +124,10 @@ public class Operaciones {
         }
 
     }
-
+    /**
+     * This method creates an object "UnidadDidactica", sets its attributes and calls a method from the DB Implementation
+     * @author Ander Goirigolzarri Iturburu
+     */
     public void createUnidadDidactica() {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -219,7 +224,10 @@ public class Operaciones {
         }
 
     }
-
+    /**
+     * This method visualizes de data of all Enunciados and asks the user for the id to open one enunciado pdf
+     * @author Andoni Sanz Alcalde
+     */
     public void visualizeEnunciado(){
         HashSet<Enunciado> enunSet = null;
         try {

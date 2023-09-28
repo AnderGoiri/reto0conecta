@@ -6,8 +6,8 @@
 package view;
 
 /**
- *
- * @author 2dam
+ * Class to create a Menu Object
+ * @author Andoni Sanz Alcalde
  */
 public class Menu {
     String menuOptions;
